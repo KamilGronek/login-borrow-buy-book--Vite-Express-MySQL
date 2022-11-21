@@ -1,0 +1,62 @@
+body {
+  margin: 20px;
+  font-family: "Lato", sans-serif;
+  background-color: #eeeeee;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(200px, 300px) minmax(280px, 1600px) auto;
+  grid-template-rows: auto 250px 1fr;
+  height: 100vh;
+  width: 100%;
+  margin: 0 auto;
+  grid-template-areas:
+    "logo logo logo"
+    "menu gallery puste"
+    "nav gallery puste";
+}
+
+@media (max-width: 712px) {
+  .active h1,
+  .done h1 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 633px) {
+  .empty .header__hr {
+    padding-top: 64px;
+  }
+  .gallery {
+    padding-top: 40px;
+  }
+}
+
+@media (max-width: 560px) {
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(120px, 550px);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "logo"
+      "menu"
+      "nav"
+      "gallery";
+  }
+  header .header__logo {
+    font-size: 100%;
+  }
+  .empty {
+    display: none;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

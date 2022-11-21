@@ -1,0 +1,25 @@
+header .header__logo {
+  width: 45px;
+  height: 42px;
+  margin-top: 17px;
+  position: absolute;
+}
+
+h1 {
+  font-size: 30px;
+  padding-left: 33px;
+  position: relative;
+  z-index: 10px;
+}
+
+hr.header__hr {
+  border: 0;
+  border-bottom: 1px dashed #ccc;
+  z-index: 100;
+  padding-top: 13px;
+}
+
+.header {
+  grid-column: 1/-1;
+  grid-row: 1/2;
+}
