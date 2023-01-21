@@ -1,20 +1,27 @@
 import React  from 'react'
 import "../styles/SectionBooks.css";
-// import {useSelector,useDispatch} from "react-redux"
-// import {confirmReturnedBook} from '../redux/actions/libraryActions'
+ import { useShowReturnedBook, useConfirmReturmedBook } from '../hooks/useDataBooks';
 
 function ReturnedBooks() {
-    const dispatch = useDispatch();
-    const returnedBooks = useSelector((state) => state.library.returnedBooks)
+ 
+    const { isLoading ,data,isError, error, isFetching, refetch } = useShowReturnedBook();
 
-    const sortReturnedBooks= returnedBooks.sort((prevId,nextId)=>{
+    const {mutate: returnBook} = useConfirmReturmedBook();
+
+    const sortReturneddBooks= data?.data.sort((prevId,nextId)=>{
         return prevId.id - nextId.id;
     })
 
+    const handleConfirmReturnedBook = (book) => {
+        returnBook(book)
+    }
+
+
     return (
-        returnedBooks.length > 0 ?(
+        <>
+        {data?.data.length > 0 ?(
                  <section className="gallery"> 
-                {sortReturnedBooks.map(book => (
+                {sortReturneddBooks.map(book => (
                     <div key={book.id} className="gallery__book">
                     <span className="gallery__bookId">{book.id}</span>
                         <img src ={book.cover.small}  alt="" />
@@ -39,15 +46,15 @@ function ReturnedBooks() {
                             <p>
                                 <em>(confirm returned book: {book.date})</em>
                             </p>
-                            <button 
-                                onClick={()=> dispatch(confirmReturnedBook(book))}
+                            <button onClick={() => handleConfirmReturnedBook(book.id)}
                                 className="confirm"> Confirm returned book
                             </button>
                         </div>
                     </div>
                 ))}
             </section>
-      ):(<p className="gallery-info">All books are returned</p>)
+      ):(<p className="gallery-info">All books are returned</p>)}
+      </>
     )
 }
 
