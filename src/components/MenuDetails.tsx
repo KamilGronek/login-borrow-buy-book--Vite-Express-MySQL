@@ -1,11 +1,18 @@
 
 import React,{useState,useEffect} from 'react'
 import "../styles/AddBook.css"
-import { useFetchLibrary, useBorrowBook} from '../hooks/useDataBooks';
+import { useFetchLibrary, useDeleteItemSelect, useBorrowBook} from '../hooks/useDataBooks';
 import { useLibraryRental } from "../context/LibraryContext";
 
 
-export const  MenuDetails=()=>{
+export const MenuDetails=()=>{
+
+  type MenuDetailsProps= {
+    data: object,
+    error: object
+  }
+
+
 
   const { countBorrowBooks,setCountBorrowBooks }  = useLibraryRental()
 
@@ -13,16 +20,17 @@ export const  MenuDetails=()=>{
   const  [actualDate, setActualDate] = useState("");
   const  [inputValue, setInputValue] = useState("");
  
-  const onSuccess = (data) => { 
+
+  const onSuccess = (data: MenuDetailsProps) => { 
     console.log('Perform side effect after data fetching', data);
   }
 
-  const onError = (error) => {
+  const onError = (error :MenuDetailsProps) => {
     console.log('Perform side effect after encountering error', error);
   }
 
   const { isLoading ,data, isError, error, isFetching, refetch } = useFetchLibrary(onSuccess,onError)
-
+  const { mutate: deleteItem } = useDeleteItemSelect()
   const { mutate: addBook } = useBorrowBook(); // Create - 201
   
 
@@ -35,24 +43,27 @@ export const  MenuDetails=()=>{
  }
 
  const addBookTobBorrowedBooks = data.data.filter(bookTitle => bookTitle.title  === inputValue)
-
+ const id = addBookTobBorrowedBooks.map(bookId => (bookId.id));
 
     let  minDate = new Date().toISOString().slice(0, 10);
-    let maxDate = minDate.slice(0, 4) * 1 + 1;
+    let  maxDate = minDate.slice(0, 4) * 1 + 1;
     let  getMaxDate = maxDate + "-12-31";
 
+
+    
     const handleBorrowBook = () => {
-      
-      console.log(addBookTobBorrowedBooks[0])
+  
       addBook(addBookTobBorrowedBooks[0]);
-        // refetch
+
+      deleteItem(id[0])
+        refetch();
 
         if(!inputValue){
             return
           }
           setChecked(false)
 
-          data?.data.forEach(book =>{
+          data?.data.forEach(book => {
           if(checked){
               book.important = true 
           }
@@ -67,11 +78,13 @@ export const  MenuDetails=()=>{
             book.date = minDate
           }
         });
-        
+
         setCountBorrowBooks(countBorrowBooks+1)
     }
 
-   
+    const sortFetchedLibrary = data?.data.sort((prevId,nextId)=>{
+        return prevId.id - nextId.id;
+    })
 
   
 return(
@@ -82,12 +95,13 @@ return(
          onChange={(e) => setInputValue(e.target.value)}
          >
                  <option>Borrow a book:</option>  
-                {data.data.map((book) => (
+                {sortFetchedLibrary.map((book) => (
                 <option key={book.id} value={book.title} >
                     {book.title}
                 </option>
                 ))}
         </select>
+        {/* {id} */}
         <div>
         <input
             type="checkbox"
@@ -110,6 +124,7 @@ return(
         <hr className="menu__hr" />
             <div className="menu__button__centerize">
                 <button>BORROW</button>
+
             </div>
         </form>
     </nav>

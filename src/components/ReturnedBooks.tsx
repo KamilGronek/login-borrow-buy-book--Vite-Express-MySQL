@@ -1,6 +1,6 @@
 import React  from 'react'
 import "../styles/SectionBooks.css";
- import { useShowReturnedBook, useConfirmReturmedBook } from '../hooks/useDataBooks';
+ import { useShowReturnedBook, useConfirmReturmedBook, useAddItemSelect } from '../hooks/useDataBooks';
 
 function ReturnedBooks() {
  
@@ -8,12 +8,19 @@ function ReturnedBooks() {
 
     const {mutate: returnBook} = useConfirmReturmedBook();
 
+    const { mutate: addItem } = useAddItemSelect();
+
     const sortReturneddBooks= data?.data.sort((prevId,nextId)=>{
         return prevId.id - nextId.id;
     })
 
-    const handleConfirmReturnedBook = (book) => {
-        returnBook(book)
+
+    const handleConfirmReturnedBook = (bookId) => {
+        returnBook(bookId)
+
+        const addItemSelect = data?.data.filter(idBook => idBook.id === bookId)
+        addItem(addItemSelect[0])
+        
     }
 
 

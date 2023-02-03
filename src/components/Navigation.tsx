@@ -19,13 +19,19 @@ const Navigation = () => {
       <ul>
         <li>
           <NavLink to="/">
-            Borrowed books 
+             Borrowed books 
             <em>({countBorrowBooks})</em>
           </NavLink>
         </li>
         <li>
-          <NavLink to="/returnedBooks">Returned books 
+          <NavLink to="/returnedBooks">
+            Returned books 
           {/* <em>({countReturnedBooks})</em> */}
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/boughtBooks">
+            Bought books 
           </NavLink>
         </li>
       </ul>

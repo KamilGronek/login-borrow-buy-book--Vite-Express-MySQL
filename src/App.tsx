@@ -7,8 +7,9 @@ import Header from "./components/Header";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import { MenuDetails } from "./components/MenuDetails";
-import ReturnedBooks from "./components/ReturnedBooks"
 import BorrowedBooks from "./components/BorrowedBooks";
+import ReturnedBooks from "./components/ReturnedBooks";
+import BoughtBooks from "./components/BoughtBooks";
 import { LibraryRentalProvider } from "./context/LibraryContext";
 
 const queryClient = new QueryClient();
@@ -24,8 +25,9 @@ function App() {
                 <Header/>
                 <MenuDetails/>
                 <Routes>
-                <Route exact path="/" element={<BorrowedBooks/>}/>
-                  <Route path="/returnedBooks" element={<ReturnedBooks/>} /> 
+                    <Route exact path="/" element={<BorrowedBooks/>} />
+                    <Route path="/returnedBooks" element={<ReturnedBooks/>} /> 
+                    <Route path="/boughtBooks" element={<BoughtBooks/>} /> 
                 </Routes>
                 <Navigation/>
           </div>
