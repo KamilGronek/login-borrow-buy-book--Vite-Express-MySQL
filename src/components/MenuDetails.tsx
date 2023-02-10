@@ -13,9 +13,6 @@ export const MenuDetails=()=>{
   }
 
 
-
-  const { countBorrowBooks,setCountBorrowBooks }  = useLibraryRental()
-
   const  [checked,setChecked] = useState(false);
   const  [actualDate, setActualDate] = useState("");
   const  [inputValue, setInputValue] = useState("");
@@ -25,7 +22,7 @@ export const MenuDetails=()=>{
     console.log('Perform side effect after data fetching', data);
   }
 
-  const onError = (error :MenuDetailsProps) => {
+  const onError = (error: MenuDetailsProps) => {
     console.log('Perform side effect after encountering error', error);
   }
 
@@ -42,60 +39,61 @@ export const MenuDetails=()=>{
   return <h2>{error.message}</h2>
  }
 
- const addBookTobBorrowedBooks = data.data.filter(bookTitle => bookTitle.title  === inputValue)
- const id = addBookTobBorrowedBooks.map(bookId => (bookId.id));
+ const addBookTobBorrowedBooks = data?.data.filter((bookTitle: any) => bookTitle.title  === inputValue)
+ const id = addBookTobBorrowedBooks.map((bookId: any) => (bookId.id));
 
-    let  minDate = new Date().toISOString().slice(0, 10);
-    let  maxDate = minDate.slice(0, 4) * 1 + 1;
-    let  getMaxDate = maxDate + "-12-31";
+    // let  minDate = new Date().toISOString().slice(0, 10);
+    // let  maxDate = minDate.slice(0, 4) * 1 + 1;
+    // let  getMaxDate = maxDate + "-12-31";
 
 
     
-    const handleBorrowBook = () => {
-  
+    const handleBorrowBook = (e: React.FormEvent<HTMLFormElement>) => {
+        // e.preventDefault()
+        // console.log(  e.preventDefault())
       addBook(addBookTobBorrowedBooks[0]);
 
       deleteItem(id[0])
         refetch();
 
-        if(!inputValue){
-            return
-          }
-          setChecked(false)
+        // if(!inputValue){
+        //     return
+        //   }
+        //   setChecked(false)
 
-          data?.data.forEach(book => {
-          if(checked){
-              book.important = true 
-          }
-          else{
-            book.important = false 
-          }
+        //   data?.data.forEach(book => {
+        //   if(checked){
+        //       book.important = true 
+        //   }
+        //   else{
+        //     book.important = false 
+        //   }
 
-          if(actualDate){
-            book.date = actualDate
-          }
-          else{
-            book.date = minDate
-          }
-        });
+        //   if(actualDate){
+        //     book.date = actualDate
+        //   }
+        //   else{
+        //     book.date = minDate
+        //   }
+        // });
 
-        setCountBorrowBooks(countBorrowBooks+1)
+        // setCountBorrowBooks(countBorrowBooks+1)
     }
 
-    const sortFetchedLibrary = data?.data.sort((prevId,nextId)=>{
+    const sortFetchedLibrary = data?.data.sort((prevId: any, nextId: any)=>{
         return prevId.id - nextId.id;
     })
 
   
 return(
     <nav className="menu">
-        <form onSubmit= {handleBorrowBook}>
+        <form onSubmit = {(e) =>handleBorrowBook(e)}>
         <select
          value ={inputValue}
          onChange={(e) => setInputValue(e.target.value)}
          >
                  <option>Borrow a book:</option>  
-                {sortFetchedLibrary.map((book) => (
+                {sortFetchedLibrary.map((book: any) => (
                 <option key={book.id} value={book.title} >
                     {book.title}
                 </option>
@@ -116,8 +114,8 @@ return(
         <input
             type="date"
             value={actualDate}
-            min={minDate}
-            max={ getMaxDate }
+            // min={minDate}
+            // max={ getMaxDate }
             onChange ={(e)=>(setActualDate(e.target.value))}
         />
         <br />

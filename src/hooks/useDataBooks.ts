@@ -14,10 +14,31 @@ type BookId = {
 }
 
 type PassBook = {
-    book: object,
+    book: DataItem,
     body: object,
     id: number,
 }
+
+
+type DataItem = {
+    data : DataArray[]
+  }
+  
+  type DataArray = {
+    id: number,
+    cover:Cover,
+    price: number,
+    title: string,
+    author: string,
+    releaseDate: number
+    pages: string,
+    link: string
+  }
+  
+  type Cover =  {
+    large: string,
+    small: string
+  }
 
 
 
@@ -73,8 +94,8 @@ export const useAddItemSelect = () => {
 //===================================================================
 
 
-const addBorrowBook = (book:PassBook) => { 
-    return request({url:'/borrowedBook', method: 'post', data: book })
+const addBorrowBook =  (book:PassBook) => { 
+    return  request({url:'/borrowedBook', method: 'post', data: book })
 }
 
 export const useBorrowBook = () => {
@@ -96,8 +117,8 @@ export const useBorrowBook = () => {
 
 
 
-const showBorrowedBook = () => { 
-    return request({url:'/borrowedBook'})
+const showBorrowedBook = async () => { 
+    return await request({url:'/borrowedBook'})
 }
 
 export const useShowBorrowedBook = () => {
@@ -284,9 +305,23 @@ const deleteBoughtBook = (id: BookId) => {
     return request({url:`/boughtBooks/${id}`, method: 'delete' })
 }
 
-export const useDeleteBoughtBoo = () => {
+export const useDeleteBoughtBook = () => {
     const queryClient = useQueryClient()
     return useMutation(deleteBoughtBook,
+        {
+        onSuccess: () => {
+            queryClient.invalidateQueries('boughtBooks')
+        },
+    })
+} 
+
+const deleteBoughtBooks = (id: BookId) => {
+    return request({url: `/boughtBooks/${id}`, method: 'delete'})
+}
+
+export const useDeleteBoughtBooks = () => {
+    const queryClient = useQueryClient()
+    return useMutation(deleteBoughtBooks,
         {
         onSuccess: () => {
             queryClient.invalidateQueries('boughtBooks')

@@ -1,60 +1,5 @@
 {
-  "books": [
-    {
-      "id": 4,
-      "cover": {
-        "large": "https://covers.oreillystatic.com/images/0636920090144/lrg.jpg",
-        "small": "https://covers.oreillystatic.com/images/0636920090144/cat.gif"
-      },
-      "price": 21.4,
-      "title": "React Native Cookbook",
-      "author": "Jonathan Lebensold",
-      "releaseDate": "02/2018",
-      "pages": 176,
-      "link": "http://shop.oreilly.com/product/0636920090144.do",
-      "date": "2023-02-02",
-      "important": false,
-      "active": false,
-      "activeReturnedBook": false,
-      "finishDate": null
-    },
-    {
-      "id": 5,
-      "cover": {
-        "large": "https://covers.oreillystatic.com/images/9783960090427/lrg.jpg",
-        "small": "https://covers.oreillystatic.com/images/9783960090427/cat.gif"
-      },
-      "price": 25.6,
-      "title": "Durchstarten mit React",
-      "author": "Stoyan Stefanov",
-      "releaseDate": "05/2017",
-      "pages": 212,
-      "link": "http://shop.oreilly.com/product/9783960090427.do",
-      "date": "2023-02-02",
-      "important": false,
-      "active": false,
-      "activeReturnedBook": false,
-      "finishDate": null
-    },
-    {
-      "id": 6,
-      "cover": {
-        "large": "https://covers.oreillystatic.com/images/9783960090663/lrg.jpg",
-        "small": "https://covers.oreillystatic.com/images/9783960090663/cat.gif"
-      },
-      "price": 11,
-      "title": "React Native",
-      "author": "Erik Behrends",
-      "releaseDate": "03/2018",
-      "pages": 260,
-      "link": "http://shop.oreilly.com/product/9783960090663.do",
-      "date": "2023-02-02",
-      "important": false,
-      "active": false,
-      "activeReturnedBook": false,
-      "finishDate": null
-    }
-  ],
+  "books": [],
   "borrowedBook": [
     {
       "id": 1,
@@ -68,25 +13,45 @@
       "releaseDate": "05/2017",
       "pages": 350,
       "link": "http://shop.oreilly.com/product/0636920049579.do",
-      "date": "2023-02-02",
+      "date": "2023-02-09",
       "important": false,
       "active": false,
       "activeReturnedBook": false,
       "finishDate": null
     },
     {
-      "id": 2,
+      "id": 4,
       "cover": {
-        "large": "https://covers.oreillystatic.com/images/0636920042266/lrg.jpg",
-        "small": "https://covers.oreillystatic.com/images/0636920042266/cat.gif"
+        "large": "https://covers.oreillystatic.com/images/0636920090144/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920090144/cat.gif"
       },
-      "price": 24,
-      "title": "JReact: Up & Running",
-      "author": "Stoyan Stefanov",
-      "releaseDate": "07/2016",
-      "pages": 222,
-      "link": "http://shop.oreilly.com/product/0636920042266.do",
-      "date": "2023-02-02",
+      "price": 21.4,
+      "title": "React Native Cookbook",
+      "author": "Jonathan Lebensold",
+      "releaseDate": "02/2018",
+      "pages": 176,
+      "link": "http://shop.oreilly.com/product/0636920090144.do",
+      "date": "2023-02-07",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    }
+  ],
+  "returnedBooks": [
+    {
+      "id": 6,
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/9783960090663/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/9783960090663/cat.gif"
+      },
+      "price": 11,
+      "title": "React Native",
+      "author": "Erik Behrends",
+      "releaseDate": "03/2018",
+      "pages": 260,
+      "link": "http://shop.oreilly.com/product/9783960090663.do",
+      "date": "2023-02-08",
       "important": false,
       "active": false,
       "activeReturnedBook": false,
@@ -104,55 +69,124 @@
       "releaseDate": "11/2017",
       "pages": 242,
       "link": "http://shop.oreilly.com/product/0636920085270.do",
-      "date": "2023-02-02",
+      "date": "2023-02-09",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": 2,
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920042266/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920042266/cat.gif"
+      },
+      "price": 24,
+      "title": "JReact: Up & Running",
+      "author": "Stoyan Stefanov",
+      "releaseDate": "07/2016",
+      "pages": 222,
+      "link": "http://shop.oreilly.com/product/0636920042266.do",
+      "date": "2023-02-08",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": 5,
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/9783960090427/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/9783960090427/cat.gif"
+      },
+      "price": 25.6,
+      "title": "Durchstarten mit React",
+      "author": "Stoyan Stefanov",
+      "releaseDate": "05/2017",
+      "pages": 212,
+      "link": "http://shop.oreilly.com/product/9783960090427.do",
+      "date": "2023-02-08",
       "important": false,
       "active": false,
       "activeReturnedBook": false,
       "finishDate": null
     }
   ],
-  "returnedBooks": [],
   "boughtBooks": [
     {
-      "id": "039689d9-e768-4022-9201-7a85f25b6358",
+      "id": "be4455a6-e830-417f-94db-4dab7d17ebb9",
       "cover": {
-        "large": "https://covers.oreillystatic.com/images/0636920049579/lrg.jpg",
-        "small": "https://covers.oreillystatic.com/images/0636920049579/cat.gif"
+        "large": "https://covers.oreillystatic.com/images/9783960090663/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/9783960090663/cat.gif"
       },
-      "price": 29,
-      "title": "Learning React",
-      "author": " Alex Banks, Eve Porcello",
-      "releaseDate": "05/2017",
-      "pages": 350,
-      "link": "http://shop.oreilly.com/product/0636920049579.do",
-      "date": "2023-02-02",
+      "price": 11,
+      "title": "React Native",
+      "author": "Erik Behrends",
+      "releaseDate": "03/2018",
+      "pages": 260,
+      "link": "http://shop.oreilly.com/product/9783960090663.do",
+      "date": "2023-02-08",
       "important": false,
       "active": false,
       "activeReturnedBook": false,
-      "finishDate": null,
-      "orderNr": 3
+      "finishDate": null
     },
     {
-      "id": "9d7b8f67-19ab-4d1f-94d3-b77d87b5f827",
+      "id": "42acc390-b60b-4f2c-9eb0-e949d6df6012",
       "cover": {
-        "large": "https://covers.oreillystatic.com/images/0636920049579/lrg.jpg",
-        "small": "https://covers.oreillystatic.com/images/0636920049579/cat.gif"
+        "large": "https://covers.oreillystatic.com/images/9783960090663/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/9783960090663/cat.gif"
       },
-      "price": 29,
-      "title": "Learning React",
-      "author": " Alex Banks, Eve Porcello",
-      "releaseDate": "05/2017",
-      "pages": 350,
-      "link": "http://shop.oreilly.com/product/0636920049579.do",
-      "date": "2023-02-02",
+      "price": 11,
+      "title": "React Native",
+      "author": "Erik Behrends",
+      "releaseDate": "03/2018",
+      "pages": 260,
+      "link": "http://shop.oreilly.com/product/9783960090663.do",
+      "date": "2023-02-08",
       "important": false,
       "active": false,
       "activeReturnedBook": false,
-      "finishDate": null,
-      "orderNr": 4
+      "finishDate": null
     },
     {
-      "id": "350dee9e-a3b5-42f0-b4d0-52b2a3e57dad",
+      "id": "a08f1443-c572-488c-86c8-9152fbaa8709",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/9783960090663/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/9783960090663/cat.gif"
+      },
+      "price": 11,
+      "title": "React Native",
+      "author": "Erik Behrends",
+      "releaseDate": "03/2018",
+      "pages": 260,
+      "link": "http://shop.oreilly.com/product/9783960090663.do",
+      "date": "2023-02-08",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "ec5b5b58-90bd-4a6e-8a54-b4aa08da986e",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/9783960090663/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/9783960090663/cat.gif"
+      },
+      "price": 11,
+      "title": "React Native",
+      "author": "Erik Behrends",
+      "releaseDate": "03/2018",
+      "pages": 260,
+      "link": "http://shop.oreilly.com/product/9783960090663.do",
+      "date": "2023-02-08",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "db9d3cc8-3fa2-40ba-ba62-95577fc6b840",
       "cover": {
         "large": "https://covers.oreillystatic.com/images/0636920049579/lrg.jpg",
         "small": "https://covers.oreillystatic.com/images/0636920049579/cat.gif"
@@ -163,12 +197,299 @@
       "releaseDate": "05/2017",
       "pages": 350,
       "link": "http://shop.oreilly.com/product/0636920049579.do",
-      "date": "2023-02-02",
+      "date": "2023-02-09",
       "important": false,
       "active": false,
       "activeReturnedBook": false,
-      "finishDate": null,
-      "orderNr": 5
+      "finishDate": null
+    },
+    {
+      "id": "96074f57-354a-4b33-bc55-d601320ec6cb",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920090144/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920090144/cat.gif"
+      },
+      "price": 21.4,
+      "title": "React Native Cookbook",
+      "author": "Jonathan Lebensold",
+      "releaseDate": "02/2018",
+      "pages": 176,
+      "link": "http://shop.oreilly.com/product/0636920090144.do",
+      "date": "2023-02-07",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "e40edb8f-1ff1-4ec2-8987-e8854c5cd5f6",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920049579/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920049579/cat.gif"
+      },
+      "price": 29,
+      "title": "Learning React",
+      "author": " Alex Banks, Eve Porcello",
+      "releaseDate": "05/2017",
+      "pages": 350,
+      "link": "http://shop.oreilly.com/product/0636920049579.do",
+      "date": "2023-02-09",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "dbfc63bb-ff95-4c85-bd7f-37b1302dc752",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920049579/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920049579/cat.gif"
+      },
+      "price": 29,
+      "title": "Learning React",
+      "author": " Alex Banks, Eve Porcello",
+      "releaseDate": "05/2017",
+      "pages": 350,
+      "link": "http://shop.oreilly.com/product/0636920049579.do",
+      "date": "2023-02-09",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "60c2425e-daf6-4774-ad78-f400375bddcb",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920049579/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920049579/cat.gif"
+      },
+      "price": 29,
+      "title": "Learning React",
+      "author": " Alex Banks, Eve Porcello",
+      "releaseDate": "05/2017",
+      "pages": 350,
+      "link": "http://shop.oreilly.com/product/0636920049579.do",
+      "date": "2023-02-09",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "7706f127-6acf-426c-8da4-6edb43683917",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920049579/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920049579/cat.gif"
+      },
+      "price": 29,
+      "title": "Learning React",
+      "author": " Alex Banks, Eve Porcello",
+      "releaseDate": "05/2017",
+      "pages": 350,
+      "link": "http://shop.oreilly.com/product/0636920049579.do",
+      "date": "2023-02-09",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "bc04fa6e-6061-4c10-afef-1aa1f9d7d4e8",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920049579/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920049579/cat.gif"
+      },
+      "price": 29,
+      "title": "Learning React",
+      "author": " Alex Banks, Eve Porcello",
+      "releaseDate": "05/2017",
+      "pages": 350,
+      "link": "http://shop.oreilly.com/product/0636920049579.do",
+      "date": "2023-02-09",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "c0581a5e-acd9-4ef3-876e-6d634222afa0",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920049579/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920049579/cat.gif"
+      },
+      "price": 29,
+      "title": "Learning React",
+      "author": " Alex Banks, Eve Porcello",
+      "releaseDate": "05/2017",
+      "pages": 350,
+      "link": "http://shop.oreilly.com/product/0636920049579.do",
+      "date": "2023-02-09",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "d0d13761-62cc-41e1-b74a-e420386c57c1",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920049579/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920049579/cat.gif"
+      },
+      "price": 29,
+      "title": "Learning React",
+      "author": " Alex Banks, Eve Porcello",
+      "releaseDate": "05/2017",
+      "pages": 350,
+      "link": "http://shop.oreilly.com/product/0636920049579.do",
+      "date": "2023-02-09",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "22fe65bc-dd8d-454c-b265-06b48f88e13b",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920049579/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920049579/cat.gif"
+      },
+      "price": 29,
+      "title": "Learning React",
+      "author": " Alex Banks, Eve Porcello",
+      "releaseDate": "05/2017",
+      "pages": 350,
+      "link": "http://shop.oreilly.com/product/0636920049579.do",
+      "date": "2023-02-09",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "edb61652-c571-482d-b154-0df5eaac5d2c",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920049579/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920049579/cat.gif"
+      },
+      "price": 29,
+      "title": "Learning React",
+      "author": " Alex Banks, Eve Porcello",
+      "releaseDate": "05/2017",
+      "pages": 350,
+      "link": "http://shop.oreilly.com/product/0636920049579.do",
+      "date": "2023-02-09",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "6a882fde-5a49-4432-9245-3dc10a0a5e51",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920049579/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920049579/cat.gif"
+      },
+      "price": 29,
+      "title": "Learning React",
+      "author": " Alex Banks, Eve Porcello",
+      "releaseDate": "05/2017",
+      "pages": 350,
+      "link": "http://shop.oreilly.com/product/0636920049579.do",
+      "date": "2023-02-09",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "c033d434-57c4-4710-bfbb-e6124c31b969",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920049579/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920049579/cat.gif"
+      },
+      "price": 29,
+      "title": "Learning React",
+      "author": " Alex Banks, Eve Porcello",
+      "releaseDate": "05/2017",
+      "pages": 350,
+      "link": "http://shop.oreilly.com/product/0636920049579.do",
+      "date": "2023-02-09",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "7fd147d1-7822-48ed-b352-0c12b54f7dd5",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920049579/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920049579/cat.gif"
+      },
+      "price": 29,
+      "title": "Learning React",
+      "author": " Alex Banks, Eve Porcello",
+      "releaseDate": "05/2017",
+      "pages": 350,
+      "link": "http://shop.oreilly.com/product/0636920049579.do",
+      "date": "2023-02-09",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "bb6507fe-2d1c-4599-ab9c-3083197c6b5d",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920090144/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920090144/cat.gif"
+      },
+      "price": 21.4,
+      "title": "React Native Cookbook",
+      "author": "Jonathan Lebensold",
+      "releaseDate": "02/2018",
+      "pages": 176,
+      "link": "http://shop.oreilly.com/product/0636920090144.do",
+      "date": "2023-02-07",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "544865d4-ea7f-46fd-ae80-b4abc3f3af16",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/9783960090663/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/9783960090663/cat.gif"
+      },
+      "price": 11,
+      "title": "React Native",
+      "author": "Erik Behrends",
+      "releaseDate": "03/2018",
+      "pages": 260,
+      "link": "http://shop.oreilly.com/product/9783960090663.do",
+      "date": "2023-02-08",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "108efb9e-6ec8-4575-95fb-022b694ad22a",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/9783960090663/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/9783960090663/cat.gif"
+      },
+      "price": 11,
+      "title": "React Native",
+      "author": "Erik Behrends",
+      "releaseDate": "03/2018",
+      "pages": 260,
+      "link": "http://shop.oreilly.com/product/9783960090663.do",
+      "date": "2023-02-08",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
     }
   ]
 }

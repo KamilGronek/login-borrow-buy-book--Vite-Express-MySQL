@@ -5,8 +5,10 @@ import { useLibraryRental } from "../context/LibraryContext";
 
 function BorrowedItem({book}) {
 
-    const {changePrice, editPriceBookClick, changePriceOfBook, priceValue,
+    const { changePrice, editPriceBookClick, changePriceOfBook, priceValue,
         priceAlert, priceAlertSecond,confirmEditBook,handleReturnedBook } =  useLibraryRental()
+
+        // const quantity = getItemQuantity(book.id)
 
     return (
      <>
@@ -37,6 +39,7 @@ function BorrowedItem({book}) {
                 <>
                     <input type="number" 
                     value={priceValue} 
+                    name={book.id}
                     placeholder={book.price} 
                     onChange={(e) => changePriceOfBook(e, book.id, book.price)}
                     />

@@ -2,17 +2,13 @@ import React  from 'react'
 import "../styles/Navigation.css";
 import { NavLink } from "react-router-dom";
 import { useLibraryRental } from "../context/LibraryContext";
+import { useBookShop } from "../context/StoreContext";
 // import {useSelector} from "react-redux"
 
 const Navigation = () => {
 
-//  const countBorrowBooks = useSelector((state)=> state.library.countBorrowBooks)
-//  const countReturnedBooks = useSelector((state)=> state.library.countReturnedBooks)
-    // const countBorrowBooks = 0;
-    // const countReturnedBooks = 0;
-
+    const { quantity } = useBookShop()
     const { countBorrowBooks }  = useLibraryRental()
-
 
   return (
     <nav className="nav">
@@ -32,6 +28,7 @@ const Navigation = () => {
         <li>
           <NavLink to="/boughtBooks">
             Bought books 
+            {/* <em>({countBoughtBooks})</em> */}
           </NavLink>
         </li>
       </ul>
