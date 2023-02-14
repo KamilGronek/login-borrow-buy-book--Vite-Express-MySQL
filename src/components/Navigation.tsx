@@ -7,8 +7,12 @@ import { useBookShop } from "../context/StoreContext";
 
 const Navigation = () => {
 
-    const { quantity } = useBookShop()
-    const { countBorrowBooks }  = useLibraryRental()
+
+    const { data, returnedBooks }  = useLibraryRental()
+
+    // const countBorrowedBooks = data?.data.length
+    // const countReturnedBooks = returnedBooks?.data.length
+
 
   return (
     <nav className="nav">
@@ -16,19 +20,13 @@ const Navigation = () => {
         <li>
           <NavLink to="/">
              Borrowed books 
-            <em>({countBorrowBooks})</em>
+            {/* <em>({countBorrowedBooks})</em> */}
           </NavLink>
         </li>
         <li>
           <NavLink to="/returnedBooks">
             Returned books 
           {/* <em>({countReturnedBooks})</em> */}
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/boughtBooks">
-            Bought books 
-            {/* <em>({countBoughtBooks})</em> */}
           </NavLink>
         </li>
       </ul>

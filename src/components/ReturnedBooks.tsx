@@ -1,24 +1,24 @@
 import React  from 'react'
 import "../styles/SectionBooks.css";
- import { useShowReturnedBook, useConfirmReturmedBook, useAddItemSelect } from '../hooks/useDataBooks';
+ import { useShowReturnedBooks, useConfirmReturmedBook, useAddItemSelect } from '../hooks/useDataLibraryBooks';
 
 function ReturnedBooks() {
  
-    const { isLoading ,data,isError, error, isFetching, refetch } = useShowReturnedBook();
+    const { isLoading ,data,isError, error, isFetching, refetch } = useShowReturnedBooks();
 
     const {mutate: returnBook} = useConfirmReturmedBook();
 
     const { mutate: addItem } = useAddItemSelect();
 
-    const sortReturneddBooks= data?.data.sort((prevId,nextId)=>{
+    const sortReturneddBooks= data?.data.sort((prevId: any,nextId: any)=>{
         return prevId.id - nextId.id;
     })
 
 
-    const handleConfirmReturnedBook = (bookId) => {
+    const handleConfirmReturnedBook = (bookId: any) => {
         returnBook(bookId)
 
-        const addItemSelect = data?.data.filter(idBook => idBook.id === bookId)
+        const addItemSelect = data?.data.filter((idBook: any) => idBook.id === bookId)
         addItem(addItemSelect[0])
         
     }
@@ -26,9 +26,10 @@ function ReturnedBooks() {
 
     return (
         <>
+        {/* {isFetching && <div>Loading...</div>} */}
         {data?.data.length > 0 ?(
                  <section className="gallery"> 
-                {sortReturneddBooks.map(book => (
+                {sortReturneddBooks.map((book: any) => (
                     <div key={book.id} className="gallery__book">
                     <span className="gallery__bookId">{book.id}</span>
                         <img src ={book.cover.small}  alt="" />
@@ -41,9 +42,9 @@ function ReturnedBooks() {
                         </h4>
                         <div className="gallery__book-details">
                             <i>
-                                Release Date: {book.releaseDate}
+                                    Release Date: {book.releaseDate}
                                 <br />
-                                Pages: {book.pages}
+                                    Pages: {book.pages}
                                 <br />
                                 <span>
                                     Links: <a href={book.link}>shop</a>
@@ -54,7 +55,7 @@ function ReturnedBooks() {
                                 <em>(confirm returned book: {book.date})</em>
                             </p>
                             <button onClick={() => handleConfirmReturnedBook(book.id)}
-                                className="confirm"> Confirm returned book
+                                className="gallery__confirmReturnedBook"> Confirm returned book
                             </button>
                         </div>
                     </div>

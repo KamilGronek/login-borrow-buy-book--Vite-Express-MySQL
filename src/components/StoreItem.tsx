@@ -1,103 +1,50 @@
-// import React, {useState} from 'react'
-// // import { useBookShop } from "../context/StoreContext"
-// import { useLibraryRental } from "../context/LibraryContext";
-// import {useAddBoughtBooks } from "../hooks/useDataBooks";
-// import { v4 as uuidv4 } from 'uuid';
+import React from 'react'
+import { useBookShop } from "../context/StoreContext"
 
-// type StoreProps = {
-//     book: Object,
-//     // buyBook: number,
-// }
+type StoreProps = {
+    book: Object
+}
 
-// type Object = {
-//     id: number
-// }
+type Object = {
+    id: number,
+    title: string
+}
 
 
+ function StoreItem({book} : StoreProps) {
 
-
-
-
-//  function StoreItem({book} : StoreProps) {
-
-//     const {data } =  useLibraryRental()
-//     const { mutate: AddBoughtBooks } = useAddBoughtBooks()
+    const { addToBuy,
+            quantity,
+            increaseCartQuantity, 
+            decreaseCartQuantity, 
+            removeFromCart 
+          } =  useBookShop();
   
-//     // const { buyBook,addToBuy,removeFromCart } = useBookShop()
 
-//     const [ buyBook, setAddToBuy ] = useState(0);
-//     const [ quantity, setQuantity ] = useState(0);
-//     const [ orderNr, setOrderNr ] = useState(1);
+  return (
+    <>
+    <hr className="borrowBook__hr" />
+    <div className="gallery__book-details">
+       {addToBuy != book.id ? 
+         (<button className="gallery_btn-addToBuy" onClick={() => increaseCartQuantity(book.id, book.title )}> 
+            + Add to buy
+         </button>
+         ):(
+            <> 
+            <div className="gallery__buttons">
+                <button  className="btn_minus"  onClick={()=> decreaseCartQuantity(book.title)}>-</button>
+                 <span> {quantity} </span> in cart
+                <button className="btn_plus" onClick={()=> increaseCartQuantity(book.id,book.title)}> + </button>
+            </div>
+            <div>
+                <button className="btn_removeBoughtBook" onClick={() => removeFromCart(book.id, book.title)}>Remove</button>      
+            </div>                     
+            </>  
+         )
+        }
+    </div>
+    </>
+  )
+}
 
-
-//     const  increaseCartQuantity = (bookId :any) => {
-    
-//         setAddToBuy(bookId)
-//     // setQuantity(quantity+1)
-  
-//         const addBookToBoughtBooks = data?.data.filter(idBook => idBook.id === bookId)
-//         const indexObject = addBookToBoughtBooks.findIndex((obj => obj.id == bookId));
-//         let objectBookToBoughtBooks =  addBookToBoughtBooks[indexObject]   
-  
-//         const newObjBoughtBooks =  {
-//           ...objectBookToBoughtBooks
-//         }
-
-//         setOrderNr(orderNr+1)
-
-//         newObjBoughtBooks['orderNr'] = orderNr
-
-//         console.log(newObjBoughtBooks)
-
-//         let indeXuuid = uuidv4()
-//         newObjBoughtBooks.id = indeXuuid
-    
-      
-//         AddBoughtBooks(newObjBoughtBooks)
-       
-//         // getId(bookId)
-//   }
-
-//   const decreaseCartQuantity = (bookId :any) =>{
-//     setQuantity(quantity-1)
-//   }
-
-
-//   const removeFromCart = (bookId :any) => {
-//     setAddToBuy(!bookId)
-//   }
-    
-
-//   return (
-//     {buyBook !=  book.id ? 
-//         (<button onClick={() => increaseCartQuantity(book.id)}> 
-//           Add to buy
-//           </button>
-//         ):(
-//         <> 
-//             <button onClick={() => decreaseCartQuantity(book.id)}>-</button>
-//             {quantity} in cart
-//             <button onClick={()=> increaseCartQuantity(book.id)}> + </button>
-//             <br></br>
-//             <button onClick={() => removeFromCart(book.id)}>Remove</button>                           
-//         </>  
-//       )}
-//   )
-// }
-
-// export default StoreItem
-
-//  // {buyBook != book.id ?(
-//         // <button onClick={() => addToBuy(book.id)}> 
-//     //         Add to buy
-//     //     </button>
-//     //    ):(
-//     //    <> 
-//     //    <button>-</button>
-//     //      <p>in cart</p>
-//     //    <button> + </button>
-//     //    <br></br>
-//     //    <button onClick={() => removeFromCart(book.id)}>Remove</button>                                              
-//     //    </>  
-//     //  )
-//     // }
+export default StoreItem

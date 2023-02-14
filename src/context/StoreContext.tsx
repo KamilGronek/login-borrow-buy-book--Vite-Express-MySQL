@@ -1,19 +1,23 @@
 // import React from 'react';
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { useShowBorrowedBook, 
-         useAddBoughtBooks,
-         useShowBoughtBooks,
-         useDeleteBoughtBook,
-         useDeleteBoughtBooks
-} from '../hooks/useDataBooks';
+import { createContext, ReactNode, useContext, useState } from "react";
+import { useShowBorrowedBook, } from '../hooks/useDataLibraryBooks';
+import {useAddBoughtBooks,
+        useShowBoughtBooks,
+        useDeleteBoughtBook,
+        useDeleteBoughtBooks
+      } from "../hooks/useDataBoughtBooks"
 import { v4 as uuidv4 } from 'uuid';
+import { StoreBookCart } from "../components/StoreBookCart";
+
+
 
 type StoreBookProviderProps = {
   children: ReactNode
 }
 
 type StoreContext = {
-  buyBook: number,
+  openCart: () => void
+  addToBuy: number,
   setAddToBuy: void,
   quantity: number,
   increaseCartQuantity: (bookId: number, bookTitle: string) => void,
@@ -24,7 +28,8 @@ type StoreContext = {
   nrQuantity: number,
   getQuantity: (nrQuantity: number) => number,
   bookTitle: string,
-  countBoughtBooks: number
+  quantityObj: number,
+  disabledBtnChangePrice: boolean
 }
 
 
@@ -36,54 +41,63 @@ export function useBookShop() {
     return useContext(StoreBookContext);
 }
 
-export function StoreBooklProvider({children} : StoreBookProviderProps){
+export function StoreBookProvider({children} : StoreBookProviderProps){
 
-    const [buyBook, setAddToBuy] = useState(0);
-    const [quantity, setQuantity ] = useState(0);
-    // const [countBoughtBooks, setCountBoughtBooks ] 
-    const { data } = useShowBorrowedBook();
-    const { data: datawBoughtBook } = useShowBoughtBooks()
-    const { mutate: AddBoughtBooks } = useAddBoughtBooks();
-    const { mutate: deleteBook } = useDeleteBoughtBook();
-    const { mutate: deleteBooks } = useDeleteBoughtBooks();
+  const [addToBuy, setAddToBuy] = useState(0);
+  const [quantity, setQuantity ] = useState(0);
+  const { data } = useShowBorrowedBook();
+  const { data: datawBoughtBook } = useShowBoughtBooks()
+  const { mutate: AddBoughtBooks } = useAddBoughtBooks();
+  const { mutate: deleteBook } = useDeleteBoughtBook();
+  const { mutate: deleteBooks } = useDeleteBoughtBooks();
 
-    const [numberInLine, setNumberInLine] = useState(0)
+  const [isOpen, setIsOpen] = useState(false);
+  const [disabledBtnChangePrice, setDisabledBtnChangePrice] = useState(false)
 
+  const openCart = () => setIsOpen(!isOpen);
 
-
-
-    const  increaseCartQuantity = (bookId: number, bookTitle: string) => {
-    
-      setAddToBuy(bookId)
  
-      const addBookToBoughtBooks = data?.data.filter((idBook: any) => idBook.id === bookId)
+  
+  const  increaseCartQuantity = (bookId: number, bookTitle: string) => {
+  
+    setAddToBuy(bookId)
 
-      const indexObject = addBookToBoughtBooks.findIndex(((obj: any) => obj.id == bookId));
-      let objectBookToBoughtBooks =  addBookToBoughtBooks[indexObject]   
+    const addBookToBoughtBooks = data?.data.filter((idBook: any) => idBook.id === bookId)
+    const indexObject = addBookToBoughtBooks.findIndex(((obj: any) => obj.id == bookId));
+    let objectBookToBoughtBooks =  addBookToBoughtBooks[indexObject]   
 
-      setNumberInLine(numberInLine+1)
+    const newObjBoughtBooks =  {
+      ...objectBookToBoughtBooks,
+    }
+    console.log(newObjBoughtBooks)
 
-      const newObjBoughtBooks =  {
-        ...objectBookToBoughtBooks,
-        //  "numberInLine": numberInLine
-      }
-      console.log(newObjBoughtBooks)
+    let indeXuuid = uuidv4()
+    newObjBoughtBooks.id = indeXuuid
+    
+    const nrQuantity = datawBoughtBook?.data.filter((book: any) => book.title === bookTitle)
+                                              .map((book: any) => book.id).length
+    setQuantity(nrQuantity)
+    AddBoughtBooks(newObjBoughtBooks)
 
-      let indeXuuid = uuidv4()
-      newObjBoughtBooks.id = indeXuuid
-      
-      const nrQuantity = datawBoughtBook?.data.filter((book: any) => book.title === bookTitle)
-                                                .map((book: any) => book.id).length
-      setQuantity(nrQuantity)
-
-      
-      AddBoughtBooks(newObjBoughtBooks)
-
-      // let countBoughtBooks = datawBoughtBook?.data.length
+    // compareObjectByTitleBook(bookTitle, bookId);
 
   }
 
-  
+  // const compareObjectByTitleBook = (bookTitle: string, bookId:number) => {
+
+  //   const dataBoughtBook =  datawBoughtBook?.data.filter((e: any) => e.title === bookTitle)
+  //   const firstElement = dataBoughtBook.find(((obj: any) => obj.title == bookTitle));
+
+  //   const dataBorrowBook =  data?.data.filter((e: any) => e.title === bookTitle)[0]
+                            
+
+  //   if(JSON.stringify(firstElement) === JSON.stringify(dataBorrowBook)){
+  //        setDisabledBtnChangePrice(true)
+  //   }else{
+  //        setDisabledBtnChangePrice(false)
+  //   }
+  // }
+
   
 
   const decreaseCartQuantity = (bookTitle: string) => {
@@ -91,17 +105,15 @@ export function StoreBooklProvider({children} : StoreBookProviderProps){
                                                           .map((book:any) => book.id)[0]
 
     const nrQuantity = datawBoughtBook?.data.filter((book: any) => book.title === bookTitle)
-                                                .map((book: any) => book.id).length
+                                             .map((book: any) => book.id).length
       setQuantity(nrQuantity)
 
-    if(quantity == 0){
+    if(quantity === 0){
       setAddToBuy(!bookId)
     }
 
       deleteBook(deleteFirstBookByTitle) 
   }
-
-
 
 
   const removeFromCart = (bookId: number, bookTitle: string) => {
@@ -116,16 +128,12 @@ export function StoreBooklProvider({children} : StoreBookProviderProps){
   }
 
 
-
-
   const getQuantityByBookTitle = (bookTitle: string) => {
     return( 
           datawBoughtBook?.data.filter((e: any) => e.title === bookTitle)
                                .map((e: any) => e.id).length
     );
  }
-
-
 
 
  const totalAmount = () => {
@@ -137,19 +145,30 @@ export function StoreBooklProvider({children} : StoreBookProviderProps){
 
 
 
+
+
+
+let quantityObj = datawBoughtBook?.data.length
+
+
+
 console.log(quantity);
      return(
         <StoreBookContext.Provider
           value={{
-              buyBook,
+              openCart,
+              addToBuy,
               quantity,
               increaseCartQuantity,
               decreaseCartQuantity,
               removeFromCart,
               getQuantityByBookTitle,
               totalAmount,
+              quantityObj,
+              disabledBtnChangePrice
           }}>
             {children}
+            <StoreBookCart isOpen={isOpen}/>
         </StoreBookContext.Provider>
      )
 

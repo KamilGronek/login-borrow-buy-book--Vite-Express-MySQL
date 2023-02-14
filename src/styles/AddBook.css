@@ -12,6 +12,14 @@ hr.menu__hr {
   margin-bottom: 1rem;
 }
 
+hr.borrowBook__hr {
+  border-top: 1px solid #aaaaaa;
+  width: 50%;
+  margin-top: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+
 .menu__button__centerize {
   display: block;
   margin: 0 auto;

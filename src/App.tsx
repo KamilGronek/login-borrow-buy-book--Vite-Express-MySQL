@@ -6,36 +6,39 @@ import { ReactQueryDevtools } from "react-query/devtools"
 import Header from "./components/Header";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
-import { MenuDetails } from "./components/MenuDetails";
+import { MenuBorrowDetails } from "./components/MenuBorrowDetails";
 import BorrowedBooks from "./components/BorrowedBooks";
 import ReturnedBooks from "./components/ReturnedBooks";
-import {BoughtBooks} from "./components/BoughtBooks";
 import { LibraryRentalProvider } from "./context/LibraryContext";
-import { StoreBooklProvider } from "./context/StoreContext";
+import { StoreBookProvider } from "./context/StoreContext";
+import { BorrowOrBuyProvider } from "./context/BorrrowOrBuyContext";
 
 const queryClient = new QueryClient();
 
 
 function App() {
-
+   
   return ( 
       <QueryClientProvider client={queryClient} >
         <LibraryRentalProvider>
-        <StoreBooklProvider>
+        <StoreBookProvider>
+          <BorrowOrBuyProvider>
           <Router>
-            <div className="grid">
-                  <Header/>
-                  <MenuDetails/>
-                  <Routes>
-                      <Route exact path="/" element={<BorrowedBooks/>} />
-                      <Route path="/returnedBooks" element={<ReturnedBooks/>} /> 
-                      <Route path="/boughtBooks" element={<BoughtBooks/>} /> 
-                  </Routes>
-                  <Navigation/>
+            <div className="App">
+              <div className="grid">
+                    <Header/>
+                    <MenuBorrowDetails/>
+                    <Routes>
+                        <Route exact path="/" element={<BorrowedBooks/>} />
+                        <Route path="/returnedBooks" element={<ReturnedBooks/>} /> 
+                    </Routes>
+                    <Navigation/>
+              </div>
             </div>
           </Router>
+          </BorrowOrBuyProvider>
           <ReactQueryDevtools initialIsOpen ={false} position='bottom-right'/>
-        </StoreBooklProvider>
+        </StoreBookProvider>
         </LibraryRentalProvider>
       </QueryClientProvider>
     

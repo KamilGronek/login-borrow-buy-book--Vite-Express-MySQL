@@ -1,20 +1,32 @@
+
+
+.App {
+  margin: 20px;
+}
+
+
 body {
   margin: 20px;
   font-family: "Lato", sans-serif;
   background-color: #eeeeee;
 }
 
+
+
+
 .grid {
+  position: static;
+  z-index: -20;
   display: grid;
   grid-template-columns: minmax(200px, 300px) minmax(280px, 1600px) auto;
   grid-template-rows: auto 250px 1fr;
-  height: 100vh;
+  height: 1700px;
   width: 100%;
   margin: 0 auto;
   grid-template-areas:
     "logo logo logo"
-    "menu gallery puste"
-    "nav gallery puste";
+    "menu gallery empty"
+    "nav gallery empty";
 }
 
 @media (max-width: 712px) {
@@ -58,5 +70,11 @@ body {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1600px) {
+  .grid {
+    height: 2400px;
   }
 }

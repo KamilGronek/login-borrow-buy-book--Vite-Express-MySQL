@@ -1,29 +1,21 @@
 // import React from 'react';
 import { createContext, ReactNode, useContext, useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "react-query"
-import { updateBorrowBook } from "../hooks/useDataBooks"
 import { useShowBorrowedBook, 
   useReturnedBook,
   useReturnTheBorrowedBook, 
-  useAddBoughtBooks,
-  useShowBoughtBooks,
-  useDeleteBoughtBook,
-  useDeleteBoughtBooks
-  // updateBorrowBook,
-  // useUpdateBorrowBook,
-  // useFetchLibrary
-} from '../hooks/useDataBooks';
-import { v4 as uuidv4 } from 'uuid';
+  useShowReturnedBooks,
+  useUpdateBorrowBook
+} from '../hooks/useDataLibraryBooks';
+import { DataItem } from "../types/types";
+
 
 type LibraryProviderProps = {
   children: ReactNode
 }
 
 
-
 type LibraryContext = {
   getItemQuantity: (id: number) => number,
-  countBorrowBooks: number,
   setCountBorrowBooks: () => number,
   changePrice: number,
   priceValue: string,
@@ -31,34 +23,19 @@ type LibraryContext = {
   priceAlertSecond: number,
   editItemsBook: object,
   editPriceBookClick: (bookId: number, book: object) => void,
-  changePriceOfBook: (e:any, id: number, bookPrice: number) => void,
-  confirmEditBook: (bookId: number) => void,
+  changePriceOfBook: (e: any, id: number, bookPrice: number) => void,
+  confirmEditBook: (e: any, bookId: number) => void,
   handleReturnedBook: (bookId: number) => void,
   data : DataItem,
+  returnedBooks: DataItem,
   isLoading: boolean,
+  isFetching: boolean,
+  disabledBtnConfirm: boolean,
+  countBorrowedBooks: number,
+  countReturnedBooks: number
 }
 
 
-
-type DataItem = {
-  data : DataArray[]
-}
-
-type DataArray = {
-  id: number,
-  cover:Cover,
-  price: number,
-  title: string,
-  author: string,
-  releaseDate: number
-  pages: string,
-  link: string
-}
-
-type Cover =  {
-  large: string,
-  small: string
-}
 
 const LibraryRentalContext = createContext({} as LibraryContext);
 
@@ -68,7 +45,6 @@ export function useLibraryRental() {
 
 export function LibraryRentalProvider({children} : LibraryProviderProps){
 
-    // const [countBorrowBooks, setCountBorrowBooks] = useState(0);
     const [changePrice, setChangePrice] = useState(0);
     const [priceValue, setPriceValue] = useState("");
     const [priceAlert, setPriceAlert] = useState(0);
@@ -98,34 +74,12 @@ export function LibraryRentalProvider({children} : LibraryProviderProps){
     const { isLoading ,data, isError, error, isFetching, refetch } = useShowBorrowedBook();
     
 
-    const { data:datawBoughtBook } = useShowBoughtBooks()
+
 
     const { mutate: returnBook } = useReturnTheBorrowedBook();  // delete
     const { mutate: addReturnedBook } = useReturnedBook(); // Create - 201
-
-    const { mutate: AddBoughtBooks } = useAddBoughtBooks();
-
-    const { mutate: deleteBook } = useDeleteBoughtBook();
-    const { mutate: deleteBooks } = useDeleteBoughtBooks();
-
- 
-
-
-    const queryClient = useQueryClient()
-
-    const updateMutation = useMutation(updateBorrowBook, {
-        onSuccess: data => {
-                queryClient.setQueryData('returnedBooks',data.data.id, (prev: any) =>{
-                    return {
-                        ...prev,
-                        price: data.data.price,
-                        body: data.body
-                    }
-                   
-                })
-        }
-      })
-
+    const { data: returnedBooks } = useShowReturnedBooks();
+    const { mutate : updateBook } = useUpdateBorrowBook()
 
     
     const resetPriceAlert = () => {
@@ -133,7 +87,7 @@ export function LibraryRentalProvider({children} : LibraryProviderProps){
       setPriceAlertSecond(0)
   }
 
-
+//1.
     const editPriceBookClick = (bookId: number, book: any) => {
       setChangePrice(bookId);
       const itemsValues = 
@@ -160,36 +114,51 @@ export function LibraryRentalProvider({children} : LibraryProviderProps){
 
   }
 
+  const [disabledBtnConfirm, setDisabledBtnConfirm] = useState(false);
+
+
+  const max = 20
+  const min = 10
+  const mathRandom = Math.random() * (max - min) + min
+
+  console.log(mathRandom)
+
+ 2//.
   const changePriceOfBook = (e: any, id: number, bookPrice: number) => {
 
     setPriceValue(e.target.value);
+
    if(e.target.value >= bookPrice){
        setPriceAlert(id);
+       setDisabledBtnConfirm(true)
    } else {
        resetPriceAlert();
+       setDisabledBtnConfirm(false)
    }
+
+  //  if(e.target.value <= mathRandom){
+  //     setPriceAlertSecond(id)
+  //     setDisabledBtnConfirm(true)
+  //  }else {
+  //     resetPriceAlert();
+  //     setDisabledBtnConfirm(false)
+  //  }
+
+
+  //  setPriceValue(e.target.value); == ?
 
     let newItemsValues = {...editItemsBook, price: parseInt(e.target.value)}
     setEditItemsBook(newItemsValues)
 
 
-
-
-   // if(e.target.value < mathRandom){
-   //     setPriceAlert(id)
-   // }else {
-   //     resetPriceAlert();
-   // }
-
-   // setPriceValue(e.target.value);
 }
 
+//3. 
+const confirmEditBook = (e: any, bookId: any) => {
 
-const confirmEditBook = (bookId: any) => {
-  updateMutation.mutate(editItemsBook)
-    // refetch();
+  updateBook(editItemsBook);
+  refetch();
   setChangePrice(!bookId);
-
 }
 
 
@@ -201,6 +170,8 @@ const handleReturnedBook = (bookId :any) => { //delete
   refetch;
 } 
 
+// let countBorrowedBooks = data?.data.length
+// let countReturnedBooks = returnedBooks?.data.length
 
      return(
         <LibraryRentalContext.Provider
@@ -209,13 +180,18 @@ const handleReturnedBook = (bookId :any) => { //delete
               editItemsBook,
               editPriceBookClick,
               changePriceOfBook,
+              confirmEditBook,
               priceValue,
               priceAlert,
               priceAlertSecond,
-              confirmEditBook,
               handleReturnedBook,
               data,
-              isLoading
+              isFetching,
+              returnedBooks,
+              isLoading,
+              disabledBtnConfirm,
+              // countBorrowedBooks,
+              // countReturnedBooks
           }}>
             {children}
         </LibraryRentalContext.Provider>
