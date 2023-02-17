@@ -1,3 +1,9 @@
+
+const express = require('express')
+const app = express()
+
+app.listen(3000)
+
 {
     "books" [
       {
@@ -155,7 +161,3 @@
     ]
   }
 
-const express = require('express')
-const app = express()
-
-app.listen(3000)

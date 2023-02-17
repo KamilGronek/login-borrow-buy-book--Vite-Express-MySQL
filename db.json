@@ -1,13 +1,12 @@
 {
-  "books": [],
-  "borrowedBooks": [
+  "books": [
     {
       "id": 2,
       "cover": {
         "large": "https://covers.oreillystatic.com/images/0636920042266/lrg.jpg",
         "small": "https://covers.oreillystatic.com/images/0636920042266/cat.gif"
       },
-      "price": 19,
+      "price": 29,
       "title": "JReact: Up & Running",
       "author": "Stoyan Stefanov",
       "pages": 222,
@@ -17,24 +16,9 @@
       "active": false,
       "activeReturnedBook": false,
       "finishDate": null
-    },
-    {
-      "id": 4,
-      "cover": {
-        "large": "https://covers.oreillystatic.com/images/0636920090144/lrg.jpg",
-        "small": "https://covers.oreillystatic.com/images/0636920090144/cat.gif"
-      },
-      "price": 21,
-      "title": "React Native Cookbook",
-      "author": "Jonathan Lebensold",
-      "pages": 176,
-      "link": "http://shop.oreilly.com/product/0636920090144.do",
-      "date": "2023-02-14",
-      "important": false,
-      "active": false,
-      "activeReturnedBook": false,
-      "finishDate": null
-    },
+    }
+  ],
+  "borrowedBooks": [
     {
       "id": 5,
       "cover": {
@@ -87,7 +71,9 @@
       "active": false,
       "activeReturnedBook": false,
       "finishDate": null
-    },
+    }
+  ],
+  "returnedBooks": [
     {
       "id": 3,
       "cover": {
@@ -104,77 +90,24 @@
       "active": false,
       "activeReturnedBook": false,
       "finishDate": null
-    }
-  ],
-  "returnedBooks": [],
-  "boughtBooks": [
-    {
-      "id": "9389fe2e-cb8a-402d-aa2c-a4d755379350",
-      "cover": {
-        "large": "https://covers.oreillystatic.com/images/0636920085270/lrg.jpg",
-        "small": "https://covers.oreillystatic.com/images/0636920085270/cat.gif"
-      },
-      "price": 23,
-      "title": "Learning React Native, 2nd Edition",
-      "author": "Bonnie Eisenman",
-      "pages": 242,
-      "link": "http://shop.oreilly.com/product/0636920085270.do",
-      "date": "2023-02-14",
-      "important": false,
-      "active": false,
-      "activeReturnedBook": false,
-      "finishDate": null
     },
     {
-      "id": "e74d4c7a-0997-4471-9585-b24365c959c2",
+      "id": 4,
       "cover": {
-        "large": "https://covers.oreillystatic.com/images/0636920085270/lrg.jpg",
-        "small": "https://covers.oreillystatic.com/images/0636920085270/cat.gif"
+        "large": "https://covers.oreillystatic.com/images/0636920090144/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920090144/cat.gif"
       },
-      "price": 23,
-      "title": "Learning React Native, 2nd Edition",
-      "author": "Bonnie Eisenman",
-      "pages": 242,
-      "link": "http://shop.oreilly.com/product/0636920085270.do",
-      "date": "2023-02-14",
-      "important": false,
-      "active": false,
-      "activeReturnedBook": false,
-      "finishDate": null
-    },
-    {
-      "id": "f47e9ca0-81a8-4b55-94b3-f26dee312bfa",
-      "cover": {
-        "large": "https://covers.oreillystatic.com/images/0636920042266/lrg.jpg",
-        "small": "https://covers.oreillystatic.com/images/0636920042266/cat.gif"
-      },
-      "price": 19,
-      "title": "JReact: Up & Running",
-      "author": "Stoyan Stefanov",
-      "pages": 222,
-      "link": "http://shop.oreilly.com/product/0636920042266.do",
-      "date": "2023-02-14",
-      "important": false,
-      "active": false,
-      "activeReturnedBook": false,
-      "finishDate": null
-    },
-    {
-      "id": "b07c791a-38b9-4426-bce9-03ffe613d593",
-      "cover": {
-        "large": "https://covers.oreillystatic.com/images/0636920042266/lrg.jpg",
-        "small": "https://covers.oreillystatic.com/images/0636920042266/cat.gif"
-      },
-      "price": 19,
-      "title": "JReact: Up & Running",
-      "author": "Stoyan Stefanov",
-      "pages": 222,
-      "link": "http://shop.oreilly.com/product/0636920042266.do",
+      "price": 21,
+      "title": "React Native Cookbook",
+      "author": "Jonathan Lebensold",
+      "pages": 176,
+      "link": "http://shop.oreilly.com/product/0636920090144.do",
       "date": "2023-02-14",
       "important": false,
       "active": false,
       "activeReturnedBook": false,
       "finishDate": null
     }
-  ]
+  ],
+  "boughtBooks": []
 }

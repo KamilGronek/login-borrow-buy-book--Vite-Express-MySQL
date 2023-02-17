@@ -26,7 +26,7 @@ type Object = {
     <hr className="borrowBook__hr" />
     <div className="gallery__book-details">
        {addToBuy != book.id ? 
-         (<button className="gallery_btn-addToBuy" onClick={() => increaseCartQuantity(book.id, book.title )}> 
+         (<button  className="gallery_btn-addToBuy" onClick={() => increaseCartQuantity(book.id, book.title)}> 
             + Add to buy
          </button>
          ):(
