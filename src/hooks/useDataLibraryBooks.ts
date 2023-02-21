@@ -66,14 +66,14 @@ export const useBorrowBook = () => {
     const queryClient = useQueryClient();
     return useMutation(addBorrowBook,
      {
-       onSuccess: (data) => {
-        // queryClient.invalidateQueries('borrowedBooks')
-        queryClient.setQueryData('library' ,(oldQueryData) => {
-            return {
-                ...oldQueryData as Record<string, unknown> ,
-                data: [...oldQueryData.data , data.data]
-            }
-        })
+       onSuccess: () => {
+        queryClient.invalidateQueries('borrowedBooks')
+        // queryClient.setQueryData('library' ,(oldQueryData) => {
+        //     return {
+        //         ...oldQueryData as Record<string, unknown> ,
+        //         data: [...oldQueryData.data , data.data]
+        //     }
+        // })
        }
      }
    )
@@ -93,7 +93,9 @@ export const useShowBorrowedBook = () => {
 
 
 const addReturnedBook = async (book: PassBook) => { 
-    return await request({url:'/returnedBooks', method: 'post', data: book })
+    let result = await request({url:'/returnedBooks', method: 'post', data: book })
+    console.log(result)
+    return result;
 }
 
 export const useReturnedBook = () => {

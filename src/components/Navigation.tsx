@@ -18,7 +18,7 @@ const Navigation = () => {
     <nav className="nav">
       <ul>
         <li>
-          <NavLink to="/">
+          <NavLink to="/borrowedBooks">
              Borrowed books 
             {/* <em>({countBorrowedBooks})</em> */}
           </NavLink>

@@ -29,7 +29,7 @@ function App() {
                     <Header/>
                     <MenuBorrowDetails/>
                     <Routes>
-                        <Route exact path="/" element={<BorrowedBooks/>} />
+                        <Route exact path="/borrowedBooks" element={<BorrowedBooks/>} />
                         <Route path="/returnedBooks" element={<ReturnedBooks/>} /> 
                     </Routes>
                     <Navigation/>

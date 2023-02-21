@@ -56,117 +56,11 @@ export function StoreBookProvider({children} : StoreBookProviderProps){
 
   const openCart = () => setIsOpen(!isOpen);
 
-//  1,1,2,3,5,8,13,21,34
-
-//  const nrArray = [1,2,3,4,5,6,7,8,9,10];
-    // nrArray.filter(el => el % 2 == 0).map(el => el * el) 
-
-   //  let res = (n-1) + (n-2)
-        //  console.log(i)
-
- 
-      
-        
-  //       let number = 9 
-        
-  //     const getOddNr =() => {
-
-  //        const typArray = []
-
-  //     for( let count = 1; count <= 10 ; count ++ ) {
-  //       const product = number * count
-  //          typArray.push(product)
-          
-  //      }
-  //      const res = typArray.filter(el => el % 2 == 0)
-
-  // }
-
-  // 1,1,2,3,5,8
-        //===============================================
-
-  //         const array = []
-  //         array[0] = 1
-
-  // for( let count = 2; count <= 7 ; count ++ ) {
-
-  //   // dla  3  [ position 4]
-
-  //    let p = count -1;    // position 2
-  //    let p2 = count -2    //  position 1
-
-
-  //   let result = p + p2 
-    
-  //   array[p] + array[p+1]
-
-  //   // console.log(rest)
-  //  }
-
-
-  // const nums = [3, 2, 4];
-  //   const sums1 = [];
-  //   const sums2 = [];
-
-  //   for( let i = 0; i< nums.length; i +=2){
-  //     const sum = nums[i] +( nums[i+1] || 0)
-  //     sums1.push(sum) // [5,4]
-  //   }
-  //   console.log(sums1)
-
-  //   for( let i = 1; i< nums.length; i +=2){
-  //     const sum = nums[i] + nums[i+1]
-  //     sums2.push(sum) // [6]
-      
-  //     const findIndexes = nums.findIndex(sum =>  sum == 6 )
-  //     console.log(findIndexes)
-  //   }
-   
-  //   console.log(sums2)
-
-
-
-//     const nums = [2, 7, 11, 15];
-
-//         const sumFirstTwo = nums.reduce((accumulator, currentElement, currentIndex) => {
-          
-//           if (currentIndex < 2) {
-//             return accumulator + currentElement;
-//           } else {
-//             return accumulator;
-//           }
-//         }, 0);
-
-// console.log(sumFirstTwo); // 9
-
-
-
-const nums = [2, 7, 11, 15];
-const tab = [];
-
-
-  const getOddNr = (nums: any) => {
-
-    for (let i = 0; i < nums.length; i++) {   
-      for (let j = i+1; j < nums.length; j++) {
-       const empty = nums[j]                           
-        // tab.push(empty)
-        console.log(empty)
-      }
-    }
-   
-  }
-
-
-
 
 
   const  increaseCartQuantity = (bookId: number, bookTitle: string) => {
 
-       getOddNr(nums)
-        
-
-
+    
     setAddToBuy(bookId)
 
     const addBookToBoughtBooks = data?.data.filter((idBook: any) => idBook.id === bookId)

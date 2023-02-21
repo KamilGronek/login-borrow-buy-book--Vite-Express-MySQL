@@ -1,163 +1,116 @@
+const express = require("express");
+const cors = require("cors");
+const app = express();
+const data = require("./db.json");
+const bodyParser = require("body-parser");
+const { v4: uuidv4 } = require('uuid');
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
 
-const express = require('express')
-const app = express()
 
-app.listen(3000)
+app.use(
+  cors({
+    origin: "http://127.0.0.1:5173"
+  })
+)
 
-{
-    "books" [
-      {
-        "id": 4,
-        "cover": {
-          "large": "https://covers.oreillystatic.com/images/0636920090144/lrg.jpg",
-          "small": "https://covers.oreillystatic.com/images/0636920090144/cat.gif"
+
+var jsonParser = bodyParser.json()
+ 
+
+// var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+app.get('/books', (req, res) => {
+    res.send(data.books);
+});
+
+// app.post('/books', (res, req) => {
+
+
+
+//     res.send(data.books)
+// })
+
+
+app.get('/borrowedBooks', (req, res) => {
+    res.send(data.borrowedBooks);
+});
+
+app.delete('/borrowedBooks/:id', (req, res) => {
+    const bookId = req.params.id
+    const borrowedBooks = db.get('borrowedBooks');
+
+    borrowedBooks.remove({ id: bookId }).write();
+    // res.send(`Szczegóły użytkownika o id ${userId}`);
+});
+
+
+
+
+const adapter = new FileSync('./db.json');
+const db = low(adapter);
+
+
+app.post('/returnedBooks', jsonParser, (req, res) => {
+
+    // console.log(req)
+    console.log(req.body)
+
+    const {id, large,small, price, title, author, 
+           pages, link, date, important, active,
+           activeReturnedBook,finishDate } = req.body;
+    
+    const createReturnedBooks = {
+        id:  id,
+        cover: {
+          large,
+          small
         },
-        "price": 21.4,
-        "title": "React Native Cookbook",
-        "author": "Jonathan Lebensold",
-        "releaseDate": "02/2018",
-        "pages": 176,
-        "link": "http://shop.oreilly.com/product/0636920090144.do",
-        "date": "2023-02-02",
-        "important": false,
-        "active": false,
-        "activeReturnedBook": false,
-        "finishDate": null
-      },
-      {
-        "id": 5,
-        "cover": {
-          "large": "https://covers.oreillystatic.com/images/9783960090427/lrg.jpg",
-          "small": "https://covers.oreillystatic.com/images/9783960090427/cat.gif"
-        },
-        "price": 25.6,
-        "title": "Durchstarten mit React",
-        "author": "Stoyan Stefanov",
-        "releaseDate": "05/2017",
-        "pages": 212,
-        "link": "http://shop.oreilly.com/product/9783960090427.do",
-        "date": "2023-02-02",
-        "important": false,
-        "active": false,
-        "activeReturnedBook": false,
-        "finishDate": null
-      },
-      {
-        "id": 6,
-        "cover": {
-          "large": "https://covers.oreillystatic.com/images/9783960090663/lrg.jpg",
-          "small": "https://covers.oreillystatic.com/images/9783960090663/cat.gif"
-        },
-        "price": 11,
-        "title": "React Native",
-        "author": "Erik Behrends",
-        "releaseDate": "03/2018",
-        "pages": 260,
-        "link": "http://shop.oreilly.com/product/9783960090663.do",
-        "date": "2023-02-02",
-        "important": false,
-        "active": false,
-        "activeReturnedBook": false,
-        "finishDate": null
-      },
-      {
-        "id": 2,
-        "cover": {
-          "large": "https://covers.oreillystatic.com/images/0636920042266/lrg.jpg",
-          "small": "https://covers.oreillystatic.com/images/0636920042266/cat.gif"
-        },
-        "price": 24,
-        "title": "JReact: Up & Running",
-        "author": "Stoyan Stefanov",
-        "releaseDate": "07/2016",
-        "pages": 222,
-        "link": "http://shop.oreilly.com/product/0636920042266.do",
-        "date": "2023-02-02",
-        "important": false,
-        "active": false,
-        "activeReturnedBook": false,
-        "finishDate": null
-      }
-    ],
-    "borrowedBook" [
-      {
-        "id": 1,
-        "cover": {
-          "large": "https://covers.oreillystatic.com/images/0636920049579/lrg.jpg",
-          "small": "https://covers.oreillystatic.com/images/0636920049579/cat.gif"
-        },
-        "price": 29,
-        "title": "Learning React",
-        "author": " Alex Banks, Eve Porcello",
-        "releaseDate": "05/2017",
-        "pages": 350,
-        "link": "http://shop.oreilly.com/product/0636920049579.do",
-        "date": "2023-02-03",
-        "important": false,
-        "active": false,
-        "activeReturnedBook": false,
-        "finishDate": null
-      }
-    ],
-    "returnedBooks" [
-      {
-        "id": 3,
-        "cover": {
-          "large": "https://covers.oreillystatic.com/images/0636920085270/lrg.jpg",
-          "small": "https://covers.oreillystatic.com/images/0636920085270/cat.gif"
-        },
-        "price": 23.2,
-        "title": "Learning React Native, 2nd Edition",
-        "author": "Bonnie Eisenman",
-        "releaseDate": "11/2017",
-        "pages": 242,
-        "link": "http://shop.oreilly.com/product/0636920085270.do",
-        "date": "2023-02-02",
-        "important": false,
-        "active": false,
-        "activeReturnedBook": false,
-        "finishDate": null
-      }
-    ],
-    "boughtBooks" [
-      {
-        "id": "c643f4c8-09b9-403b-91b9-135fb1a9dbad",
-        "cover": {
-          "large": "https://covers.oreillystatic.com/images/0636920085270/lrg.jpg",
-          "small": "https://covers.oreillystatic.com/images/0636920085270/cat.gif"
-        },
-        "price": 23.2,
-        "title": "Learning React Native, 2nd Edition",
-        "author": "Bonnie Eisenman",
-        "releaseDate": "11/2017",
-        "pages": 242,
-        "link": "http://shop.oreilly.com/product/0636920085270.do",
-        "date": "2023-02-02",
-        "important": false,
-        "active": false,
-        "activeReturnedBook": false,
-        "finishDate": null,
-        "orderNr": 1
-      },
-      {
-        "id": "27e14828-4837-4453-ae9a-f7cedc28e8c9",
-        "cover": {
-          "large": "https://covers.oreillystatic.com/images/0636920049579/lrg.jpg",
-          "small": "https://covers.oreillystatic.com/images/0636920049579/cat.gif"
-        },
-        "price": 29,
-        "title": "Learning React",
-        "author": " Alex Banks, Eve Porcello",
-        "releaseDate": "05/2017",
-        "pages": 350,
-        "link": "http://shop.oreilly.com/product/0636920049579.do",
-        "date": "2023-02-02",
-        "important": false,
-        "active": false,
-        "activeReturnedBook": false,
-        "finishDate": null,
-        "orderNr": 2
-      }
-    ]
-  }
+         price,
+         title,
+         author,
+         pages,
+         link,
+         date,
+         important,
+         active,
+         activeReturnedBook,
+         finishDate
+    }
+
+    const returnedBooks = db.get('returnedBooks')
+    returnedBooks.push(createReturnedBooks).write();
+
+
+});
+
+
+app.get('/returnedBooks', (req, res) => {
+    res.send(data.returnedBooks);
+});
+
+
+
+app.delete('/returnedBooks/:id', (req, res) => {
+    const userId = req.params.id
+    res.send(userId);
+});
+
+
+app.get('/boughtBooks', (req, res) => {
+    res.send(data.boughtBooks);
+});
+
+app.delete(`/boughtBooks/:id`, (req, res) => {
+    const userId = req.params.id
+
+    res.send(userId);
+});
+
+
+
+
+app.listen(4000, () => {
+    console.log('Server is running on port 4000');
+});
 
