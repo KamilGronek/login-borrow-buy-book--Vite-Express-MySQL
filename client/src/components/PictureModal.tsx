@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
-
+import "../styles/Modal.scss"
 import { useShowBorrowedBook } from "../hooks/useDataLibraryBooks";
  
 Modal.setAppElement('#root')

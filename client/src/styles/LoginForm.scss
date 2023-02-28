@@ -1,3 +1,8 @@
+$gray: #808080;
+$light-blue: #61DBFB;
+$white: #ffffff;
+
+
 :root {
     --primary-light-hsl: 200, 100%, 91%;
     --primary-hsl: 200, 100%, 50%;
@@ -7,8 +12,7 @@
   }
 
 .container,
-.container-register
-{
+.container-register{
     display: flex;
     flex-direction:column;
     height: 400px;
@@ -20,11 +24,11 @@
 }
 
 .container {
-    background-color: #808080;
+    background-color: $gray;
 }
 
 .container-register{
-    background-color: #61DBFB;
+    background-color: $light-blue;
 }
 
 
@@ -42,11 +46,11 @@
 }
 
 .registerSpan{
-    color: #808080;
+    color: gray;
 }
 
 .loginSpan{
-    color: #61DBFB;
+    color: $light-blue;
 }
 
 .input-group {
@@ -54,56 +58,56 @@
     flex-direction: column;
     gap: 7px;
     z-index: 100;
-}
 
-.input-group label{
-    color: white;
-    font-weight: lighter;
-}
+    label{
+        color: $white;
+        font-weight: lighter;
+    }
 
-.input-group input {
-    font-size: 1.25rem;
-    padding: .5em;
-    border: none;
-    outline: none;
-    border-radius: .25em;
-    font-weight: lighter;
+    input {
+        font-size: 1.25rem;
+        padding: .5em;
+        border: none;
+        outline: none;
+        border-radius: .25em;
+        font-weight: lighter;
+    }
 }
 
 hr.span-login {
-    background-color: #61DBFB;
-    border: 1px solid #61DBFB;
+    background-color: $light-blue;
+    border: 1px solid $light-blue;
     width: 30px;
     height: px;
 }
 
 hr.span-register {
-    background-color: #808080;
-    border: 1px solid #808080;
+    background-color: gray;
+    border: 1px solid gray;
     width: 30px;
     height: px;
 }
 
 .navLink,
 .navLink-register{
-    color: #ffffff;
+    color: $white;
 }
 
 .navLink:hover{
-    color: #61DBFB;
+    color: $light-blue;
 }
 .navLink-register:hover{
-    color: #808080;
+    color: $gray;
 }
 
 .input-group.success input {
     box-shadow: 0 0 0 1px hsl(var(--success-hsl));
-  }
+}
   
-  .input-group.error input {
+.input-group.error input {
     box-shadow: 0 0 0 1px hsl(var(--error-hsl));
-  }
+}
   
-  .input-group input:focus {
+.input-group input:focus {
     box-shadow: 0 0 0 1px hsl(var(--primary-hsl));
-  }
+}

@@ -1,0 +1,124 @@
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 380px));
+  gap: 15px;
+  padding: 15px 15px;
+
+
+  img {
+    padding: 0px 100px;
+  }
+
+    &__btn-details {
+      margin-top: 10px;
+    }
+
+    &__book-details {
+    color: #aaaaaa;
+    font-size: 15px;
+    }
+
+
+    &__book-details,
+    &-info {
+      text-align: center;
+    }
+
+    &__book-author {
+      font-weight: lighter;
+    }
+
+    &_btn-addToBuy {
+      color: blue
+    }
+
+    &__bookId {
+      font-size: 55px;
+      font-weight: bolder;
+      color: #d8d7d7;
+      position: relative;
+      display: inline;
+      display: flex;
+      width: 50px;
+      height: 50px;
+      top: 0;
+      left: 0;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+    }
+
+    &__img {
+      cursor: pointer;
+    }
+
+    &__book {
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+    
+    &_btn button {
+      background-color: #aaaaaa; 
+      color: #eeeeee;  
+    }
+    
+    &_btn-addToBuy {
+      background-color: #0096FF;
+      color: #eeeeee;
+    }
+    
+    &__confirmReturnedBook{
+      background-color: #aaaaaa; 
+      color: #eeeeee;  
+    }
+}
+
+h3,
+h4{
+  text-align: center;
+}
+
+
+p {
+  color: #aaaaaa;
+  font-size: 15px;
+}
+
+
+span a {
+  color: #ff0000;
+  text-decoration: none;
+  border-bottom: dashed 1px #ff0000;
+  font-weight: bold;
+}
+
+
+hr.gallery__hr {
+  background-color: #ff0000;
+  border: 1px solid #ff0000;
+  width: 30px;
+}
+
+.active h1,
+.done h1 {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  &_minus{
+    background-color: #0096FF;
+    color: #eeeeee;
+  }
+  &_plus {
+    background-color: #0096FF;
+    color: #eeeeee;
+  }
+  &_removeBoughtBook {
+    background-color: #ff0000;
+    color: #eeeeee;
+  }
+}

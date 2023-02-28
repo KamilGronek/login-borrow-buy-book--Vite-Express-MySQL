@@ -309,6 +309,176 @@
       "active": false,
       "activeReturnedBook": false,
       "finishDate": null
+    },
+    {
+      "id": "4037f695-6628-48d8-8118-1edf045c5ce5",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920090144/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920090144/cat.gif"
+      },
+      "price": 21,
+      "title": "React Native Cookbook",
+      "author": "Jonathan Lebensold",
+      "pages": 176,
+      "link": "http://shop.oreilly.com/product/0636920090144.do",
+      "date": "2023-02-14",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "6788e62a-4502-48a7-b2d4-cd3efa852ff4",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920090144/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920090144/cat.gif"
+      },
+      "price": 21,
+      "title": "React Native Cookbook",
+      "author": "Jonathan Lebensold",
+      "pages": 176,
+      "link": "http://shop.oreilly.com/product/0636920090144.do",
+      "date": "2023-02-14",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "a6c64107-0c26-4820-b0d1-d7b708e1aceb",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920090144/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920090144/cat.gif"
+      },
+      "price": 21,
+      "title": "React Native Cookbook",
+      "author": "Jonathan Lebensold",
+      "pages": 176,
+      "link": "http://shop.oreilly.com/product/0636920090144.do",
+      "date": "2023-02-14",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "9ce6b1d6-b855-4c4c-a08f-23670a4f7615",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920090144/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920090144/cat.gif"
+      },
+      "price": 21,
+      "title": "React Native Cookbook",
+      "author": "Jonathan Lebensold",
+      "pages": 176,
+      "link": "http://shop.oreilly.com/product/0636920090144.do",
+      "date": "2023-02-14",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "e89582e6-b57a-407d-8c87-6b55f233f038",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920049579/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920049579/cat.gif"
+      },
+      "price": 18,
+      "title": "Learning React",
+      "author": " Alex Banks, Eve Porcello",
+      "pages": 350,
+      "link": "http://shop.oreilly.com/product/0636920049579.do",
+      "date": "2023-02-14",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "45a2c349-f4f5-42fa-8aab-98da91056914",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/0636920090144/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/0636920090144/cat.gif"
+      },
+      "price": 21,
+      "title": "React Native Cookbook",
+      "author": "Jonathan Lebensold",
+      "pages": 176,
+      "link": "http://shop.oreilly.com/product/0636920090144.do",
+      "date": "2023-02-14",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "fb5fd28a-11f2-4f44-ae40-9849fa3b3abb",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/9783960090427/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/9783960090427/cat.gif"
+      },
+      "price": 25.6,
+      "title": "Durchstarten mit React",
+      "author": "Stoyan Stefanov",
+      "pages": 212,
+      "link": "http://shop.oreilly.com/product/9783960090427.do",
+      "date": "2023-02-14",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "d5485ead-55bf-47f6-87cb-73692584fcb1",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/9783960090427/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/9783960090427/cat.gif"
+      },
+      "price": 25.6,
+      "title": "Durchstarten mit React",
+      "author": "Stoyan Stefanov",
+      "pages": 212,
+      "link": "http://shop.oreilly.com/product/9783960090427.do",
+      "date": "2023-02-14",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "ea47a480-6477-43be-b8e7-7eebebba6615",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/9783960090427/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/9783960090427/cat.gif"
+      },
+      "price": 25.6,
+      "title": "Durchstarten mit React",
+      "author": "Stoyan Stefanov",
+      "pages": 212,
+      "link": "http://shop.oreilly.com/product/9783960090427.do",
+      "date": "2023-02-14",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
+    },
+    {
+      "id": "9086810f-fd27-45ac-97cb-cbbd4767ff07",
+      "cover": {
+        "large": "https://covers.oreillystatic.com/images/9783960090427/lrg.jpg",
+        "small": "https://covers.oreillystatic.com/images/9783960090427/cat.gif"
+      },
+      "price": 25.6,
+      "title": "Durchstarten mit React",
+      "author": "Stoyan Stefanov",
+      "pages": 212,
+      "link": "http://shop.oreilly.com/product/9783960090427.do",
+      "date": "2023-02-14",
+      "important": false,
+      "active": false,
+      "activeReturnedBook": false,
+      "finishDate": null
     }
   ]
 }

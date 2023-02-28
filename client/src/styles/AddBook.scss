@@ -1,3 +1,7 @@
+$gray: #aaaaaa;
+$red: #ff0000;
+$white: #eeeeee;
+
 .form_text input {
   width: 50px;
   height: 30px;
@@ -6,14 +10,14 @@
 }
 
 hr.menu__hr {
-  border-top: 1px solid #aaaaaa;
+  border-top: 1px solid $gray;
   width: 100%;
   margin-top: 0.8rem;
   margin-bottom: 1rem;
 }
 
 hr.borrowBook__hr {
-  border-top: 1px solid #aaaaaa;
+  border-top: 1px solid $gray;
   width: 50%;
   margin-top: 0.8rem;
   margin-bottom: 1rem;
@@ -26,19 +30,22 @@ hr.borrowBook__hr {
   text-align: center;
 }
 
-.menu__button__centerize button {
-  background-color: #aaaaaa;
-  color: #eeeeee;
-  border-radius: 5px;
-  border: none;
-  font-size: 16px;
-  padding: 10px 15px;
-  cursor: pointer;
+.menu__button__centerize{
+  button {
+    background-color: $gray;
+    color: $white;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    padding: 10px 15px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: $red;
+  }
 }
 
-.menu__button__centerize button:hover {
-  background-color: #ff0000;
-}
 
 .empty .header__hr {
   padding-top: 79px;

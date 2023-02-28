@@ -1,18 +1,12 @@
-
-
 .App {
   margin: 20px;
 }
-
 
 body {
   margin: 20px;
   font-family: "Lato", sans-serif;
   background-color: #eeeeee;
 }
-
-
-
 
 .grid {
   position: static;
@@ -28,6 +22,8 @@ body {
     "menu gallery empty"
     "nav gallery empty";
 }
+
+
 
 @media (max-width: 712px) {
   .active h1,

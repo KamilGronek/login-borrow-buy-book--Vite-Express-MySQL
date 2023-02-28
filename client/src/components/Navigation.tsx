@@ -1,5 +1,5 @@
 import React  from 'react'
-import "../styles/Navigation.css";
+import "../styles/Navigation.scss";
 import { NavLink } from "react-router-dom";
 import { useLibraryRental } from "../context/LibraryContext";
 import { useBookShop } from "../context/StoreContext";

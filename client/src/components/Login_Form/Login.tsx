@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import App from '../../App'
 import { NavLink } from "react-router-dom";
-import "../../styles/LoginForm.css"
+import "../../styles/LoginForm.scss"
 import { useloginUser} from "../../hooks/useDataFormUser";
 
 export function LoginForm() {

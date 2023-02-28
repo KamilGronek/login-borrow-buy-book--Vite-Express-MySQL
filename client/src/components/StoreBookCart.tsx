@@ -1,6 +1,6 @@
 // import React from 'react'
 import { useBookShop } from "../context/StoreContext"
-import "../styles/StoreBookCart.css"
+import "../styles/StoreBookCart.scss"
 import { useShowBoughtBooks, useDeleteBoughtBook } from '../hooks/useDataBoughtBooks';
 
 

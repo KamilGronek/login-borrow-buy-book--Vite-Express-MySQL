@@ -1,0 +1,48 @@
+
+$gray: #aaaaaa;
+$red: #ff0000;
+$white: #eeeeee;
+$black: #000000;
+$green: #008000;
+
+.nav {
+  grid-column: 1/2;
+  grid-row: 3/4;
+  padding-top: 15px;
+
+    ul {
+      list-style-type: none;
+    }
+
+    a {
+      display: block;
+      text-decoration: none;
+      color: $black;
+      text-transform: uppercase;
+      font-weight: bold;
+      padding: 10px;
+    }
+
+    a:hover {
+      transform: translateX(20px);
+    }
+
+    a.active {
+      border-left: 10px $white solid;
+      transform: translateX(0px);
+    }
+
+    li:nth-child(1) a.active {
+      border-left-color: $red;
+    }
+
+    li:nth-child(2) a.active {
+      border-left-color: $green;
+    }
+}
+
+.menu {
+  grid-column: 1/2;
+  grid-row: 2/3;
+  padding-top: 15px;
+}

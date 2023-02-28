@@ -1,5 +1,5 @@
 import React from 'react'
-import "../styles/SectionBooks.css";
+import "../styles/SectionBooks.scss";
 import { useLibraryRental } from "../context/LibraryContext";
 import BorrowedItem from "./Items/BorrowedItem";
 import StoreItem from "./Items/StoreItem";
