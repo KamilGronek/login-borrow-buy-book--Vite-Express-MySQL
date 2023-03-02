@@ -1,14 +1,20 @@
-if(process.env.NODE_ENV !== 'production') {
-    require('dotenv').config()
-}
+// if(process.env.NODE_ENV !== 'production') {
+//     require('dotenv').config()
+// }
+
+require('dotenv').config()
+
 
 const express = require("express");
-const cors = require("cors");
 const app = express();
-const data = require("./db.json");
+const jwt = require('jsonwebtoken');
+
+app.use(express.json())
+
+const cors = require("cors");
 const bodyParser = require("body-parser");
 let jsonParser = bodyParser.json()
-const bcrypt = require('bcrypt');
+const data = require("./db.json");
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('./db.json');
@@ -20,20 +26,70 @@ app.use(
   })
 )
 
+const routesBorrowdBooks = require('./routers/borrowedBooks.cjs');
 const routesReturnedBooks = require('./routers/returnedBooks.cjs');
 const routesBoughtBooks = require('./routers/boughtBooks.cjs');
 const routerLogin = require('./routers/login-register.cjs');
 const routerRegister = require('./routers/login-register.cjs');
+const routergetPosts = require('./routers/getPosts.cjs');
 
-app.use('/', routesReturnedBooks, routesBoughtBooks,routerLogin, routerRegister);
+
+app.use('/',
+  routesBorrowdBooks,
+  routesReturnedBooks,
+  routesBoughtBooks,
+  routerLogin,
+  routerRegister,
+  routergetPosts
+  );
 
 
 // var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
+// const posts = [ 
+//   {
+//       username: 'Kyle',
+//       title: 'Post 1'
+//   },
+//   {
+//       username: 'Jim',
+//       title: 'Post 2'
+//   }
+// ]
+
+// app.get('/posts', authenticateToken, (req, res) => {
+//   res.json(posts.filter(post => post.username === req.user.name))
+// })
+
+
+
+// function authenticateToken(req, res, next) {
+//     const authHeader = req.headers['authorization']
+//     const token = authHeader && authHeader.split('')[1]
+//     if (token == null)  return res.sendStatus(401)
+       
+  
+//     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+//         if(err)  return res.sendStatus(403)
+//         req.user = user
+//         next()
+//     })
+// }
+
+
 app.get('/books', (req, res) => {
     res.send(data.books);
 });
+
+// app.delete('/books/:id', jsonParser, (req, res) => {
+//   const bookId = req.params.id
+
+//   const deleteBook = db.get('books');
+//   const bookToDelete = deleteBook.find({ id: bookId });
+//   deleteBook.remove(bookToDelete).write();
+
+// });
 
 app.post('/books', (res, req) => {
     const { id, cover, price, title, author, 
@@ -68,31 +124,6 @@ app.post('/books', (res, req) => {
     book.push(createItemsdBooks).write();
 })
 
-
-app.get('/borrowedBooks', (req, res) => {
-    const borrowedBooks = db.get('borrowedBooks');
-    res.send(borrowedBooks);
-});
-
-
-app.delete('/borrowedBooks/:id', (req, res) => {
-    const bookId = req.params.id;
-  
-    const borrowedBooks = db.get('borrowedBooks');
-    borrowedBooks.remove({ id: bookId }).write();
-  
-    db.write((err) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Internal server error'); 
-      } else {
-        res.sendStatus(204); 
-      }
-    });
-  });
-// const returnedBooks = db.get('returnedBooks')
-// let result = returnedBooks.find({id : createReturnedBooks.id});
-//  returnedBooks.push(createReturnedBooks).write();
 
 
 

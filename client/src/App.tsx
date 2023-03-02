@@ -26,11 +26,11 @@ function App() {
           <BorrowOrBuyProvider>
           <Router>
             <div className="App">
-                  {/* <Routes>
+                  <Routes>
                      <Route path="/login" element={<LoginForm/>} />
                      <Route path="/register" element={<Register/>} />
-                 </Routes> */}
-             <div className="grid">
+                 </Routes>
+             {/* <div className="grid">
                  <Header/>
                  <MenuBorrowDetails/>
                  <Routes>
@@ -38,7 +38,7 @@ function App() {
                      <Route path="/returnedBooks" element={<ReturnedBooks/>} /> 
                  </Routes>
                  <Navigation/>
-             </div>
+             </div> */}
             </div>
           </Router>
           </BorrowOrBuyProvider>
