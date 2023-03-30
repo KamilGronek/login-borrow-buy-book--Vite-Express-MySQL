@@ -8,33 +8,42 @@ type UserRegister = {
     passwordUser: string
 }
 
-type UserLogin = {
-    LoginUser: string,
-    passwordUser: string
-}
+// type UserLogin = {
+//     LoginUser: string,
+//     passwordUser: string
+// }
 
-type loginUserProps = {
-    onError: () => void
+type UserLogout = {
+    auth: string
 }
-
- 
-const registerUser = (userRegister: UserRegister) => {
-    return request({url:'/register', method: 'post', data: userRegister })
-   
-}
-
-export const useRegisterUSer = () => {
-    const queryClient = useQueryClient();
-    return useMutation(registerUser, {
-        onSuccess: () => {
-            queryClient.invalidateQueries('register')
-        }
-    })
-}
-
 
 
 // const [ token, setToken ] = useState("")
+ 
+
+const registerUser = async (userRegister: UserRegister) => {
+    return request({url:'/register', method: 'post', data: userRegister }).result
+}
+
+export const useRegisterUser = () => {
+    const queryClient = useQueryClient();
+    return useMutation(async (userRegister: UserRegister) => {
+        return await registerUser(userRegister);
+    }, { 
+        onSuccess: (data) => {
+            console.log(data)
+            queryClient.invalidateQueries('register')
+        },
+        onError: (error:any) => {
+            console.log(error)
+            // alert(error.message);
+        },
+    });
+};
+
+
+
+
 
 // const loginUser = async (userLogin: UserLogin) => {
 //     return axios.post('http://localhost:5000/login', userLogin)
@@ -45,28 +54,27 @@ export const useRegisterUSer = () => {
 //     return useMutation(loginUser, {
 //         onSuccess: (data) => {
 //             queryClient.invalidateQueries('login')
-//             setToken(data.data)
+//             setToken(data.data.accessToken) 
 //         },
 //     });
 // };
 
 
-// const showRegisterUser = (token: any) => { 
-//     return request({url:'/register', 
-//     headers: {
-//         'Authorization': `Bearer ${token}}`
-//      }});
-// }
 
-// export const useshowRegisterUsers = () => {
-//     const queryClient = useQueryClient();
-//     return useMutation(showRegisterUser, {
-//         onSuccess: () => {
-//             queryClient.invalidateQueries('register')
-//          }
-//     }
-//     )
-// }
+const logOut = async (auth : any) => {
+    return axios.delete('http://localhost:5000/logout', auth)
+}
 
+export const useLogout = () => {
+    const queryClient = useQueryClient();
+    return useMutation(logOut, {
+        onSuccess: (data) => {
+            console.log(data)
+            queryClient.invalidateQueries('logout')
+        },
+        onError: (error:any) => {
+            console.log(error)
+        },
+    })
+}
 
-    // return await request({url:`/login`, method: 'post', data: userLogin })

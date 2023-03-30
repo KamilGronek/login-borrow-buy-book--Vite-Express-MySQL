@@ -45,7 +45,7 @@ export function StoreBookProvider({children} : StoreBookProviderProps){
 
   const [addToBuy, setAddToBuy] = useState(0);
   const [quantity, setQuantity ] = useState(0);
-  const { data } = useShowBorrowedBook();
+  const { data,error } = useShowBorrowedBook();
   const { data: datawBoughtBook } = useShowBoughtBooks()
   const { mutate: AddBoughtBooks } = useAddBoughtBooks();
   const { mutate: deleteBook } = useDeleteBoughtBook();
@@ -56,6 +56,9 @@ export function StoreBookProvider({children} : StoreBookProviderProps){
 
   const openCart = () => setIsOpen(!isOpen);
 
+
+
+  console.log(error)
 
 
   const  increaseCartQuantity = (bookId: number, bookTitle: string) => {
@@ -148,14 +151,7 @@ export function StoreBookProvider({children} : StoreBookProviderProps){
   );
 }
 
-
-
-
-
-
 let quantityObj = datawBoughtBook?.data.length
-
-
 
 console.log(quantity);
      return(

@@ -7,6 +7,10 @@ import { useShowBorrowedBook,
   useUpdateBorrowBook
 } from '../hooks/useDataLibraryBooks';
 import { DataItem } from "../types/types";
+import { AuthContext } from "../context/AuthProvider"
+import { useQuery, useMutation, useQueryClient } from "react-query"
+import { request } from '../utils/axios-utils'
+
 
 
 type LibraryProviderProps = {
@@ -27,6 +31,7 @@ type LibraryContext = {
   confirmEditBook: (e: any, bookId: number) => void,
   handleReturnedBook: (bookId: number) => void,
   data : DataItem,
+  // error: unknown,
   returnedBooks: DataItem,
   isLoading: boolean,
   isFetching: boolean,
@@ -70,10 +75,48 @@ export function LibraryRentalProvider({children} : LibraryProviderProps){
       }
     );
 
+    // const getHeaders =  () => {
+    //   const myValue = useAuth();
+    //   console.log(myValue)
+    //   return (
+    //       console.log(myValue)
+    //       // {myValue}
+    //   )
+    // };
   
-    const { isLoading ,data, isError, error, isFetching, refetch } = useShowBorrowedBook();
-    
 
+
+    // const showBorrowedBook = async (auth:any) => { 
+    //   try{
+    //     const headers = {  Authorization: `Bearer ${auth}`}
+    //     let response =  await request({url:'/borrowedBooks', headers})
+    //     return response;
+    //   }catch (error) {
+    //     console.log(error);
+    //   }
+    // }
+
+
+
+    // const { auth } = useContext(AuthContext);
+
+    // console.log(auth)
+
+    // const { isLoading ,data, isError, error, isFetching, refetch } = useQuery(
+    //   'borrowedBooks', 
+    //   () => showBorrowedBook(auth), 
+    //   {
+    //     enabled: !!auth,
+    //   }
+    // )
+    
+    const { isLoading ,data, isError, error, isFetching, refetch } = useShowBorrowedBook()
+
+    console.log(data)
+   
+    // if(error){
+    //   console.log(error.response.data.code)
+    // }
 
 
     const { mutate: returnBook } = useReturnTheBorrowedBook();  // delete
@@ -89,6 +132,7 @@ export function LibraryRentalProvider({children} : LibraryProviderProps){
 
 //1.
     const editPriceBookClick = (bookId: number, book: any) => {
+      console.log("start", "editPriceBookClick");
       setChangePrice(bookId);
       const itemsValues = 
           {
@@ -111,6 +155,7 @@ export function LibraryRentalProvider({children} : LibraryProviderProps){
             }
             
       setEditItemsBook(itemsValues);
+      console.log("end", "editPriceBookClick");
 
   }
 
@@ -126,6 +171,7 @@ export function LibraryRentalProvider({children} : LibraryProviderProps){
  2//.
   const changePriceOfBook = (e: any, id: number, bookPrice: number) => {
 
+    console.log("start", "changePriceOfBook");
     setPriceValue(e.target.value);
 
    if(e.target.value >= bookPrice){
@@ -149,25 +195,30 @@ export function LibraryRentalProvider({children} : LibraryProviderProps){
 
     let newItemsValues = {...editItemsBook, price: parseInt(e.target.value)}
     setEditItemsBook(newItemsValues)
-
+    console.log("start", "changePriceOfBook");
 
 }
 
 //3. 
 const confirmEditBook = (e: any, bookId: any) => {
 
+  console.log("start ", "confirmEditBook")
+  console.log(editItemsBook);
   updateBook(editItemsBook);
   refetch();
   setChangePrice(!bookId);
+  console.log("end ", "confirmEditBook")
 }
 
 
 const handleReturnedBook = (bookId :any) => { //delete
 
+  console.log("start ", "handleReturnedBook")
   returnBook(bookId);
   const addBookTobReturnedBooks = data?.data.filter((idBook:any)  => idBook.id === bookId)
   addReturnedBook(addBookTobReturnedBooks[0])
   refetch;
+  console.log("end ", "handleReturnedBook")
 } 
 
 // let countBorrowedBooks = data?.data.length

@@ -1,35 +1,22 @@
-import React, {useState} from 'react'
-import App from '../../App'
 import { NavLink } from "react-router-dom";
 import "../../styles/LoginForm.scss"
-import { useRegisterUSer} from "../../hooks/useDataFormUser";
+import { useRegister } from "../../context/RegisterContext"
 
 export function Register() {
 
-    const { mutate } = useRegisterUSer();  
-   
-    const [ registerUser, setRegisterUser] = useState("");
-    const [ passwordUser,setPasswordUser ] = useState("")
-  
+    const {registerUser, passwordUser, setRegisterUser, 
+           setPasswordUser, showInfo, handleCreateUser, data } = useRegister()
 
-    const handleCreateUser = async (e:any) => {
-      e.preventDefault();
-      const userRegister = {
-        registerUser,
-        passwordUser
-      }
-     await mutate(userRegister)
-    };
 
   return (
-     <form action="/register" onSubmit={handleCreateUser}>
+     <form action="/register" method="POST" onSubmit={handleCreateUser}>
       <div className="container-register">
       <img className="logo_background" src="react-icon-02.png" alt=""/>
       <h2 className="login-title">React's library & shop/ <span className="registerSpan">Register</span></h2>
       <div className="input-group success">
-        <label><b>Login</b></label>
-         <input type="text" 
-          placeholder="Enter Login" required
+        <label><b>E-mail</b></label>
+         <input type="email" 
+          placeholder="Enter E-mail" required
           name="registerUser"
           value ={registerUser}
           onChange = {(e) => setRegisterUser(e.target.value)}
@@ -43,7 +30,14 @@ export function Register() {
           value ={passwordUser}
           onChange = {(e) => setPasswordUser(e.target.value)}
           />
-          <hr className="span-register"/>
+          <>
+          {showInfo ? (
+            <span> {data?.data} </span>
+          ):(
+            <hr className="span-register"/>
+          )
+          }
+          </>
           <button type="submit">Register</button>
           <label>
           <input type="checkbox" name="remember"/> 

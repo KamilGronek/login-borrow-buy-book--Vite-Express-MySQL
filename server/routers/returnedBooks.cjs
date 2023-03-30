@@ -8,6 +8,7 @@ const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('./db.json');
 const db = low(adapter);
+const jwt = require('jsonwebtoken')
 
 
 
@@ -57,11 +58,34 @@ router.post('/returnedBooks', upload.single('image'), jsonParser, (req, res) => 
 });
 
 
-router.get('/returnedBooks', (req, res) => {
+router.get('/returnedBooks', authenticateToken, (req, res) => {
     const returnedBooks = db.get('returnedBooks')
     console.log(returnedBooks)
     res.send(returnedBooks);
 });
+
+
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+
+  if (!token) {
+      return res.status(401).json({warning:'No token provided'})
+  
+  }
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+
+    if(err){
+          console.log('Error verifying JWT:', err);
+          res.status(401).json({ warning: 'Invalid token',code: "EXPIRED"
+          }); 
+    }
+    req.user = user;
+  next()
+  })
+}
+  
 
 
 router.delete('/returnedBooks/:id', (req, res) => {
@@ -69,6 +93,8 @@ router.delete('/returnedBooks/:id', (req, res) => {
     console.log(bookId)
     const borrowedBooks = db.get('returnedBooks');
     borrowedBooks.remove({ id: bookId }).write();
+
+    res.status(200).json({warning:'Book returned'})
 });
 
 module.exports = router;

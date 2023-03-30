@@ -15,7 +15,14 @@
     margin-top: 17px;
     position: absolute;
   }
+
+  &__info {
+    display: flex;
+    gap:20px
+  }
 }
+
+
 
 hr.header__hr {
   border: 0;

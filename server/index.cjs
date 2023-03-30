@@ -29,53 +29,19 @@ app.use(
 const routesBorrowdBooks = require('./routers/borrowedBooks.cjs');
 const routesReturnedBooks = require('./routers/returnedBooks.cjs');
 const routesBoughtBooks = require('./routers/boughtBooks.cjs');
-const routerLogin = require('./routers/login-register.cjs');
 const routerRegister = require('./routers/login-register.cjs');
-const routergetPosts = require('./routers/getPosts.cjs');
 
 
 app.use('/',
   routesBorrowdBooks,
   routesReturnedBooks,
   routesBoughtBooks,
-  routerLogin,
   routerRegister,
-  routergetPosts
   );
 
 
 // var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-
-// const posts = [ 
-//   {
-//       username: 'Kyle',
-//       title: 'Post 1'
-//   },
-//   {
-//       username: 'Jim',
-//       title: 'Post 2'
-//   }
-// ]
-
-// app.get('/posts', authenticateToken, (req, res) => {
-//   res.json(posts.filter(post => post.username === req.user.name))
-// })
-
-
-
-// function authenticateToken(req, res, next) {
-//     const authHeader = req.headers['authorization']
-//     const token = authHeader && authHeader.split('')[1]
-//     if (token == null)  return res.sendStatus(401)
-       
-  
-//     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-//         if(err)  return res.sendStatus(403)
-//         req.user = user
-//         next()
-//     })
-// }
 
 
 app.get('/books', (req, res) => {

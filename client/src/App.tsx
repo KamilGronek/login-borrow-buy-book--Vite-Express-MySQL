@@ -1,52 +1,30 @@
-import React, {useState} from "react";
 import "./styles/App.css";
-import { QueryClientProvider ,QueryClient } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools"
-import { BrowserRouter as Router, Routes, Route  } from "react-router-dom";
-import { Header } from "./components/Header";
-import { Navigation } from "./components/Navigation";
-import { MenuBorrowDetails } from "./components/MenuBorrowDetails";
+import { QueryClient } from "react-query";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { BorrowedBooks } from "./components/BorrowedBooks";
 import { ReturnedBooks } from "./components/ReturnedBooks";
-import { LibraryRentalProvider } from "./context/LibraryContext";
-import { StoreBookProvider } from "./context/StoreContext";
-import { BorrowOrBuyProvider } from "./context/BorrrowOrBuyContext";
-import { LoginForm } from "./components/Login_Form/Login";
+import { Login } from "./components/Login_Form/Login";
 import { Register } from "./components/Login_Form/Register";
-
+import RequireAuth from './components/RequireAuth';
+import { NoMatch }  from "./components/NoMatch";
 
 const queryClient = new QueryClient();
 
 function App() {
 
   return ( 
-      <QueryClientProvider client={queryClient} >
-        <LibraryRentalProvider>
-        <StoreBookProvider>
-          <BorrowOrBuyProvider>
-          <Router>
-            <div className="App">
-                  <Routes>
-                     <Route path="/login" element={<LoginForm/>} />
-                     <Route path="/register" element={<Register/>} />
-                 </Routes>
-             {/* <div className="grid">
-                 <Header/>
-                 <MenuBorrowDetails/>
-                 <Routes>
-                     <Route path="/borrowedBooks" element={<BorrowedBooks/>} />
-                     <Route path="/returnedBooks" element={<ReturnedBooks/>} /> 
-                 </Routes>
-                 <Navigation/>
-             </div> */}
-            </div>
-          </Router>
-          </BorrowOrBuyProvider>
-          <ReactQueryDevtools initialIsOpen ={false} position='bottom-right'/>
-        </StoreBookProvider>
-        </LibraryRentalProvider>
-      </QueryClientProvider>
-    
+
+    <div className="App">
+          <Routes>
+             <Route path="/login" element={<Login/>} />
+             <Route path="/register" element={<Register/>} />
+             <Route element = {<RequireAuth/>}>
+                <Route path="/borrowedBooks" element={<BorrowedBooks/>} />
+                <Route path="/returnedBooks" element={<ReturnedBooks/>} /> 
+            </Route>   
+            <Route path="*" element={<NoMatch/>} />
+         </Routes>
+    </div>
   );
 }
 

@@ -1,12 +1,12 @@
-GET http://localhost:4000/register
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZFVzZXIiOiIxMjMiLCJpYXQiOjE2Nzc3NTk5MzcsImV4cCI6MTY3Nzc1OTk1N30.9fKljoUauJxhIA4xQ-udcq_jZT67GVKHNOv9eA1Sk3k
+GET http://localhost:4000/borrowedBooks
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpblVzZXIiOiJmb2xpdGVnYXZAbWFpbGluYXRvci5jb20iLCJwYXNzd29yZFVzZXIiOiIyMjIiLCJpYXQiOjE2Nzk2MTQxMzUsImV4cCI6MTY3OTYxNDE1NX0.mGR2Zu53wjplXmxEOD4bDXAVvBcsNLHs9rCM9TqnK50
 ###
 
 POST http://localhost:5000/token
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSmltIiwiaWF0IjoxNjc3NjkxMDM0fQ.H3vumPPHMOd1bv2nr7hu74rzj0RfG5zajasWcPPMyQM"
+    "token":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpblVzZXIiOiJmb2xpdGVnYXZAbWFpbGluYXRvci5jb20iLCJwYXNzd29yZFVzZXIiOiIyMjIiLCJpYXQiOjE2Nzk2MTQxMzV9.3ViZ100BoP-7-EFziPc67W0cI0-dzByh1ihvdvSED9U"
 }
 ###
 
@@ -14,7 +14,7 @@ POST http://localhost:5000/login
 Content-Type: application/json
 
 {
-          "registerUser": "www",
-          "passwordUser": "123"
+          "loginUser": "folitegav@mailinator.com",
+          "passwordUser": "222"
 }
 

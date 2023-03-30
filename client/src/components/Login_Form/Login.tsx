@@ -1,121 +1,88 @@
-import React,{useState} from 'react'
-import App from '../../App'
+import React,{useEffect, useState} from 'react'
 import { NavLink } from "react-router-dom";
 import "../../styles/LoginForm.scss"
-// import { useloginUser, useshowRegisterUsers} from "../../hooks/useDataFormUser";
-import { useQuery, useMutation, useQueryClient } from "react-query";
-import { request } from '../../utils/axios-utils';
+import { useLogin } from "../../context/LoginContext"
+import { useMutation } from "react-query";
 import axios from 'axios';
+import useAuth from '../../hooks/useAuth';
+import { useNavigate  } from 'react-router-dom';
+import { useLogout } from "../../hooks/useDataFormUser";
 
-export function LoginForm() {
-
-  type LoginProps = {
-    error: object
-  }
-
-  type UserLogin = {
-    LoginUser: string,
+type UserLogin = {
+  LoginUser: string,
 }
 
-  const [ loginUser, setLoginUser ] = useState("");
-  const [ passwordUser,setPasswordUser ] = useState("")
-  const [errorMessage, setErrorMessage] = useState('');
 
-  
-  //========================================================================
-  const [ token, setToken ] = useState("")
+export function Login() {
 
-  const login = async (userLogin: UserLogin) => {
+  const {loginUser,setLoginUser} = useLogin()
+  const [ passwordUser,setPasswordUser ] = useState("");
+    
+
+    const [ show, setShow ] = useState(false);
+    const [ warningError, setWarningError] = useState("")
+    const [ showLogoutInfo , setShowLogoutInfo ] = useState(false) 
+    const navigateTo = useNavigate();
+    const {  setAuth, setRefreshToken } :any = useAuth();
+    const { data: logoutInfo } = useLogout();
+    console.log(logoutInfo)
+
+    const login = async (userLogin: UserLogin) => {
       return axios.post('http://localhost:5000/login', userLogin)
-  }
+    }
+  
+    const { mutate,isError ,error, isLoading, data, } = useMutation(login, {
+            onSuccess: (data: any) => {   
+                console.log(data?.data.accessToken)
+                
+                setAuth(data.data.accessToken)   
+                
+                setRefreshToken(data.data.refreshToken)               
+
+             if(data.data.accessToken == undefined){
+                return;
+             }
  
-  const { mutate, error, isLoading, } = useMutation(login, {
-          onSuccess: (data: any) => {
-              setToken(data.data.accessToken)               
-              console.log(data.data.accessToken)
-          },
-  });
+              navigateTo("/borrowedBooks");
+                
+            },
+            onError: (error:any) => {  
+              console.log(error)   
+              setWarningError(error.response.data.warning)
+            }
+    });
   
 
-
-   const showRegisterUser =  async () => { 
-
-    if(!token) {
-      return;
-    }
-
-    const getHeaders = () => {
-      return {
-        Authorization: `Bearer ${token}`,
-      };
-    };
+    const handleLoginUser = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
   
-    try {  
-        const response = await request({url:'/register', headers: getHeaders()})
-        return response;
-    } catch (error) {
-        console.log(error);
-    }
-  }
-  
-   const { data } =  useQuery('register', showRegisterUser)
-         
-  console.log(data)
+      const userLogin = {
+        loginUser,
+        passwordUser
+      }
 
-
-  // const { data: users, isLoading: isUsersLoading } = useQuery('register',
-  //   () => axios.get('http://localhost:4000/register', { headers }).then((res) => res.data),
-  //   { enabled: !!token }
-  // );
-
-  // console.log(users)
-
-  // =========================================================
-
-  const handleLoginUser = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setErrorMessage('');
-    const userLogin = {
-      loginUser,
-      passwordUser
-    }
-    mutate(userLogin)
+      await  mutate(userLogin)
+       setShow(true);
   };
+  
 
+  useEffect(() => {
+      setInterval(() => {
+      setShow(false)
+      }, 10000);
+  },[]);
 
-  const handleLogoutUser = () => {
-    setToken('');
-  };
 
 
   return (
-    <div>
-      {token ? (
-        <>
-          <h1>Users</h1>
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : ( ""
-            // <ul>
-            //   {data.map((user:any) => (
-            //     <li key={user.id}>{user.name}</li>
-            //   ))}
-            // </ul>
-          )}
-          <button onClick={handleLogoutUser}>Logout</button>
-        </>
-      ) : (
-        <>
-          <h1>Login</h1>
-          {error && <p>Failed to login.</p>}
-    <form action="/register" onSubmit={handleLoginUser}>
+    <form action="/login" method="POST" onSubmit={handleLoginUser}>
       <div className="container">
       <img className="logo_background" src="react-icon.png" alt=""/>
       <h2 className="login-title">React's library & shop/ <span className="loginSpan">Login</span></h2>
         <div className="input-group success">
-          <label><b>Login</b></label>
-          <input type="text" 
-            placeholder="Enter Login" required
+          <label><b>E-mail</b></label>
+          <input type="email" 
+            placeholder="Enter E-mail" required
             name="loginUser"
             value ={loginUser}
             onChange = {(e) => setLoginUser(e.target.value)}
@@ -129,9 +96,20 @@ export function LoginForm() {
             value ={passwordUser}
             onChange = {(e) => setPasswordUser(e.target.value)}
           />
-           <hr className="span-login"/>
+           <>
+            {show ? (
+              <span style={{color: "red"}}> {warningError} </span>
+            ):(
+              <hr className="span-login"/>
+            ) }
+            </>
+            {showLogoutInfo ? (
+              <span style={{color: "green"}}> {logoutInfo?.data.info} </span>
+              ):(
+              "")}
+          
           <button type="submit">Login</button>
-          {/* {errorMessage && <div>{errorMessage}</div>} */}
+
           <label>
           <input type="checkbox" name="remember"/> 
             Remember me
@@ -140,9 +118,6 @@ export function LoginForm() {
         <NavLink className="navLink" to="/register">Register</NavLink>
       </div>
      </form>
-     </>
-      )}
-    </div>
   )
 }
 

@@ -1,6 +1,9 @@
 import React  from 'react'
 import "../styles/SectionBooks.scss";
- import { useShowReturnedBooks, useConfirmReturmedBook, useAddItemSelect } from '../hooks/useDataLibraryBooks';
+import { useShowReturnedBooks, useConfirmReturmedBook, useAddItemSelect } from '../hooks/useDataLibraryBooks';
+import { Header } from "./Header";
+import { MenuBorrowDetails } from "./MenuBorrowDetails";
+import { Navigation } from "./Navigation";
 
  export function ReturnedBooks() {
  
@@ -25,7 +28,9 @@ import "../styles/SectionBooks.scss";
 
     return (
         <>
-        {/* {isFetching && <div>Loading...</div>} */}
+        <div className="grid">
+        <Header/>
+         <MenuBorrowDetails/>
         {data?.data.length > 0 ?(
             <section className="gallery"> 
                 {sortReturneddBooks.map((book: any) => (
@@ -61,6 +66,8 @@ import "../styles/SectionBooks.scss";
                 ))}
             </section>
       ):(<p className="gallery-info">All books are returned</p>)}
+       <Navigation/>
+       </div>
       </>
     )
 }

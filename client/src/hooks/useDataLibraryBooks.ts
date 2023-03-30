@@ -1,8 +1,13 @@
 
+import React,{useEffect, useState} from 'react'
 import { useQuery, useMutation, useQueryClient } from "react-query"
 import { request } from '../utils/axios-utils'
 import { BookId, PassBook } from "../types/types" 
+// import { useAuth } from './useAuth';
 
+import { useContext } from 'react';
+import { AuthContext } from "../context/AuthProvider"
+import axios from 'axios';
 
 type FetchLibraryProps = {
     onSuccess: () => void,
@@ -11,7 +16,7 @@ type FetchLibraryProps = {
 
 
 const fetchLibrary = async () => {
-    return await request({url:'/books'})
+    return await request({url:'/books'}).result
  }
 
  export const useFetchLibrary = ({onSuccess, onError}: FetchLibraryProps)  => {
@@ -27,7 +32,7 @@ const fetchLibrary = async () => {
 
 
  const deleteItemSelect = (id: BookId) => {  
-    return request({url:`/books/${id}`, method: 'delete' })
+    return request({url:`/books/${id}`, method: 'delete' }).result
 }
 
 export const useDeleteItemSelect = () => {
@@ -36,14 +41,13 @@ export const useDeleteItemSelect = () => {
       {
         onSuccess: (data) => {
             queryClient.invalidateQueries('library')
-            console.log(data)
         }
       }
     )
 }
 
 const addItemSelect = async (book: PassBook ) => {
-    return await request({url:`/books`, method: 'post', data: book })
+    return await request({url:`/books`, method: 'post', data: book }).result
 }
 
 export const useAddItemSelect = () => {
@@ -59,7 +63,7 @@ export const useAddItemSelect = () => {
 
 
 const addBorrowBook = async (book:PassBook) => { 
-    return await request({url:'/borrowedBooks', method: 'post', data: book })
+    return await request({url:'/borrowedBooks', method: 'post', data: book }).result
 }
 
 export const useBorrowBook = () => {
@@ -80,21 +84,44 @@ export const useBorrowBook = () => {
 }
 
 
-const showBorrowedBook = async () => { 
-    return await request({url:'/borrowedBooks'})
+
+
+const showBorrowedBook = async (auth:any) => { 
+
+    try {
+        const headers = {  Authorization: `Bearer ${auth}`}
+        const response =  await request({url:'/borrowedBooks', headers}).result
+        return response;
+        
+    } catch (err) {
+        console.log(err);
+        // return null;
+    }
 }
 
 export const useShowBorrowedBook = () => {
+
+    const { auth } = useContext(AuthContext);
+    console.log("useShowBorrowedBook Auth:",auth)
     return useQuery(
         'borrowedBooks',
-        showBorrowedBook,
-    )
+        () => showBorrowedBook(auth), 
+        {
+             enabled: !!auth,
+        }
+    );
 }
 
 
+// onError: (error:any) => {     
+//     console.log(error.response.data.warning)
+//   }
+
+
+//=============================================================
+
 const addReturnedBook = async (book: PassBook) => { 
-    let result = await request({url:'/returnedBooks', method: 'post', data: book })
-    console.log(result)
+    let result = await request({url:'/returnedBooks', method: 'post', data: book }).result
     return result;
 }
 
@@ -103,26 +130,44 @@ export const useReturnedBook = () => {
   return useMutation(addReturnedBook,{
     onSuccess: () => {
         queryClient.invalidateQueries('returnedBooks')
-    }
+    },
   }
   )
 }
 
-const showReturnedBooks = async () => { 
-    return await request({url:'/returnedBooks'});
-}
 
+//=========================================
+
+const showReturnedBooks = async (auth:any) => { 
+
+    try {
+        console.log(auth)
+        const headers = { Authorization: `Bearer ${auth}`}
+        let response =  await request({url:'/returnedBooks', headers}).result
+        return response;
+    } 
+    catch (err) {
+        console.log(err);
+        return null;
+    }
+}
+ 
 export const useShowReturnedBooks = () => {
+
+    const { auth } = useContext(AuthContext);
     return useQuery(
         'returnedBooks',
-        showReturnedBooks,
+        () => showReturnedBooks(auth),
+        {
+            enabled: !!auth,
+        }
     )
 }
 
 
 
  export const updateBorrowBook = (body:any) => { 
-    return request({url:`/borrowedBooks/${body.id}`, method: 'put', data: body});
+    return request({url:`/borrowedBooks/${body.id}`, method: 'put', data: body}).result;
 }
 
 export const useUpdateBorrowBook = () => {
@@ -137,7 +182,7 @@ export const useUpdateBorrowBook = () => {
 
 
 const returnTheBorrowedBook = (id: BookId) => {  
-    return request({url:`/borrowedBooks/${id}`, method: 'delete' })
+    return request({url:`/borrowedBooks/${id}`, method: 'delete' }).result
 }
 
 export const useReturnTheBorrowedBook = () => {
@@ -152,7 +197,7 @@ export const useReturnTheBorrowedBook = () => {
 
 
 const confirmReturnedBook = (id: BookId) => {
-    return request({url:`/returnedBooks/${id}`, method: 'delete' })
+    return request({url:`/returnedBooks/${id}`, method: 'delete' }).result
 }
 
 export const useConfirmReturmedBook = () => {

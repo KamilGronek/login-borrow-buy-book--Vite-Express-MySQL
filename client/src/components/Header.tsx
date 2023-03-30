@@ -1,18 +1,41 @@
 import React from "react";
 import "../styles/Header.scss"
 import { useBookShop } from "../context/StoreContext"
-
+import { useLogin } from "../context/LoginContext"
+import { useNavigate  } from 'react-router-dom';
+import { useLogout } from "../hooks/useDataFormUser"
+import useAuth from "../hooks/useAuth"
 
 
 export function Header() {
 
+  const navigateTo = useNavigate();
+
   const { openCart,quantityObj } = useBookShop();
+  const { loginUser} = useLogin()
+  const { auth } = useAuth();
+  
+
+  const {mutate: logout} = useLogout();
+
+
+  const logOut = () => {
+    localStorage.removeItem('token');
+    navigateTo("/login");
+    logout(auth)
+  }
+
+console.log("quantityObj:",quantityObj)
 
   return (
     <header className="header">
       <img className="header__logo" src="logo192.png" alt=""/>
         <div className = "header__shop">
           <h2>React's library & shop</h2>
+          <div className = "header__info">
+            <h3>Login: {loginUser}</h3>
+            <button onClick={logOut}>Log out</button>
+          </div>
             {quantityObj > 0 && (
               <button onClick={openCart} 
                 className="rounded-circle"
