@@ -203,8 +203,10 @@ export function LibraryRentalProvider({children} : LibraryProviderProps){
 const confirmEditBook = (e: any, bookId: any) => {
 
   console.log("start ", "confirmEditBook")
-  console.log(editItemsBook);
+  console.log("editItemsBook: ",editItemsBook);
   updateBook(editItemsBook);
+
+  
   refetch();
   setChangePrice(!bookId);
   console.log("end ", "confirmEditBook")

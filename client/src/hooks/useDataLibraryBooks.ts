@@ -39,15 +39,15 @@ export const useDeleteItemSelect = () => {
     const queryClient = useQueryClient()
     return useMutation(deleteItemSelect,
       {
-        onSuccess: (data) => {
+        onSuccess: () => {
             queryClient.invalidateQueries('library')
         }
       }
     )
 }
 
-const addItemSelect = async (book: PassBook ) => {
-    return await request({url:`/books`, method: 'post', data: book }).result
+const addItemSelect = (book: PassBook ) => {
+    return  request({url:`/books`, method: 'post', data: book }).result
 }
 
 export const useAddItemSelect = () => {
@@ -113,13 +113,6 @@ export const useShowBorrowedBook = () => {
 }
 
 
-// onError: (error:any) => {     
-//     console.log(error.response.data.warning)
-//   }
-
-
-//=============================================================
-
 const addReturnedBook = async (book: PassBook) => { 
     let result = await request({url:'/returnedBooks', method: 'post', data: book }).result
     return result;
@@ -136,7 +129,7 @@ export const useReturnedBook = () => {
 }
 
 
-//=========================================
+
 
 const showReturnedBooks = async (auth:any) => { 
 

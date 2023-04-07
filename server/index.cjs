@@ -4,14 +4,16 @@
 
 require('dotenv').config()
 
-
 const express = require("express");
 const app = express();
 const jwt = require('jsonwebtoken');
 
-app.use(express.json())
+const connection = require('./database.cjs')
 
+app.use(express.json())
 const cors = require("cors");
+const multer  = require('multer');
+const upload = multer({ dest: 'uploads/' });
 const bodyParser = require("body-parser");
 let jsonParser = bodyParser.json()
 const data = require("./db.json");
@@ -37,16 +39,37 @@ app.use('/',
   routesReturnedBooks,
   routesBoughtBooks,
   routerRegister,
-  );
+);
+
 
 
 // var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
+app.get('/books', (req,res) => {
+  connection.query(
+    "SELECT * FROM project_book.books",
+  (err, results) => {
+    if (err) {
+      console.log(err)
+    } 
 
-
-app.get('/books', (req, res) => {
-    res.send(data.books);
+    const updatedResults = results.map(book => {
+      return {
+        ...book,
+        cover: JSON.parse(book.cover)
+      };
+    });
+    res.send(updatedResults);
+  });
 });
+
+
+
+// app.get('/books', (req, res) => {
+//   res.send(data.books);
+// });
+
+
 
 // app.delete('/books/:id', jsonParser, (req, res) => {
 //   const bookId = req.params.id
@@ -57,7 +80,7 @@ app.get('/books', (req, res) => {
 
 // });
 
-app.post('/books', (res, req) => {
+app.post('/books', upload.single('image'), jsonParser, (req, res) => {
     const { id, cover, price, title, author, 
         pages, link, date, important, active,
         activeReturnedBook,finishDate } = req.body;
@@ -85,15 +108,54 @@ app.post('/books', (res, req) => {
         finishDate
     }
 
-    const book = db.get('books')
+    let sql = "INSERT INTO books(id, cover, price, title, author, pages, link,date, important,active, activeReturnedBook,finishDate) VALUES ?";
+    let values = [ 
+      [ createItemsdBooks.id, 
+        JSON.stringify(createItemsdBooks.cover), 
+        createItemsdBooks.price, 
+        createItemsdBooks.title, 
+        createItemsdBooks.author, 
+        createItemsdBooks.pages, 
+        createItemsdBooks.link, 
+        createItemsdBooks.date, 
+        createItemsdBooks.important, 
+        createItemsdBooks.active, 
+        createItemsdBooks.activeReturnedBook,
+        createItemsdBooks.finishDate ]
+    ];
+
+    connection.query(sql,[values], function(err, result){
+      if (err) throw err;
+        console.log("records inserted:", result.affectedRows);
+    })
+
+
+    // const book = db.get('books')
     // returnedBooks.find({id : createItemsdBooks.id}).value();
-    book.push(createItemsdBooks).write();
+    // book.push(createItemsdBooks).write();
 })
 
+app.delete('/books/:id', jsonParser, (req, res) => {
+    // const bookId = req.params.id;
+
+    let sql = `DELETE FROM books WHERE id = ${req.params.id}`;
+
+    connection.query(sql, function(err, result){
+      if (err) throw err;
+        console.log("records deleted:", result.affectedRows);
+        res.send("Book deleted successfully");
+    })
+
+
+})
 
 
 
 app.listen(4000, () => {
     console.log('Server is running on port 4000');
+    connection.connect(function(err){
+      if(err) throw err;
+      console.log('Database connected!');
+    })
 });
 

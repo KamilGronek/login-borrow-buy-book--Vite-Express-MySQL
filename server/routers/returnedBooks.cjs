@@ -4,16 +4,13 @@ const bodyParser = require("body-parser");
 const multer  = require('multer');
 const upload = multer({ dest: 'uploads/' });
 let jsonParser = bodyParser.json()
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
-const adapter = new FileSync('./db.json');
-const db = low(adapter);
 const jwt = require('jsonwebtoken')
+const connection = require('../database.cjs')
 
 
 
 
-router.post('/returnedBooks', upload.single('image'), jsonParser, (req, res) => {
+router.post('/returnedBooks', authenticateToken, upload.single('image'), jsonParser, (req, res) => {
 
     const { id, cover, price, title, author, 
             pages, link, date, important, active,
@@ -22,12 +19,10 @@ router.post('/returnedBooks', upload.single('image'), jsonParser, (req, res) => 
     const {large,small} = cover;
     const file = req.file
     console.log(file);
-
     console.log(req.body)
 
-
     const createReturnedBooks = {
-        id,
+       id,
         cover: {
           large,
           small
@@ -44,24 +39,63 @@ router.post('/returnedBooks', upload.single('image'), jsonParser, (req, res) => 
         finishDate
     }
 
-    const returnedBooks = db.get('returnedBooks')
-    let result = returnedBooks.find({id : createReturnedBooks.id});
+  
+    let sql = "INSERT INTO returnedbooks(id, cover, price, title, author, pages, link,date, important,active, activeReturnedBook,finishDate) VALUES ?";
+    let values = [ 
+      [ createReturnedBooks.id, 
+        JSON.stringify(createReturnedBooks.cover), 
+        createReturnedBooks.price, 
+        createReturnedBooks.title, 
+        createReturnedBooks.author, 
+        createReturnedBooks.pages, 
+        createReturnedBooks.link, 
+        createReturnedBooks.date, 
+        createReturnedBooks.important, 
+        createReturnedBooks.active, 
+        createReturnedBooks.activeReturnedBook,
+        createReturnedBooks.finishDate ]
+    ];
 
-    let book = result.value();
+    connection.query(sql,[values], function(err, result){
+      if (err) throw err;
+        console.log("records inserted:", result.affectedRows);
+    })
+});
 
-    if (book == null) {
-        console.log("nie książka isnieje")
-        returnedBooks.push(createReturnedBooks).write();
-    //    return;
-    }
+
+router.get('/returnedBooks',authenticateToken, (req, res) => {
+    connection.query(
+      "SELECT * FROM project_book.returnedbooks",
+    (err, results) => {
+      if (err) {
+        console.log(err)
+      } 
+
+      const updatedResults = results.map(book => {
+        return {
+          ...book,
+          cover: JSON.parse(book.cover)
+        };
+      });
+
+       console.log("borrowedBooooooks:",updatedResults)
+      res.send(updatedResults);
+    });
+
 
 });
 
 
-router.get('/returnedBooks', authenticateToken, (req, res) => {
-    const returnedBooks = db.get('returnedBooks')
-    console.log(returnedBooks)
-    res.send(returnedBooks);
+router.delete('/returnedBooks/:id', (req, res) => {
+    const bookId = req.params.id
+
+    let sql = `DELETE FROM returnedbooks WHERE id = ${bookId}`;
+
+    connection.query(sql, function(err, result){
+      if (err) throw err;
+        console.log("records deleted:", result.affectedRows);
+        res.send("ReturnedBooks deleted successfully");
+    })
 });
 
 
@@ -85,16 +119,5 @@ function authenticateToken(req, res, next) {
   next()
   })
 }
-  
-
-
-router.delete('/returnedBooks/:id', (req, res) => {
-    const bookId = req.params.id
-    console.log(bookId)
-    const borrowedBooks = db.get('returnedBooks');
-    borrowedBooks.remove({ id: bookId }).write();
-
-    res.status(200).json({warning:'Book returned'})
-});
 
 module.exports = router;

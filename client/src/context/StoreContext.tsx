@@ -3,7 +3,7 @@ import { createContext, ReactNode, useContext, useState } from "react";
 import { useShowBorrowedBook, } from '../hooks/useDataLibraryBooks';
 import {useAddBoughtBooks,
         useShowBoughtBooks,
-        useDeleteBoughtBook,
+        useDecreaseBoughtBook,
         useDeleteBoughtBooks
       } from "../hooks/useDataBoughtBooks"
 import { v4 as uuidv4 } from 'uuid';
@@ -48,7 +48,7 @@ export function StoreBookProvider({children} : StoreBookProviderProps){
   const { data,error } = useShowBorrowedBook();
   const { data: datawBoughtBook } = useShowBoughtBooks()
   const { mutate: AddBoughtBooks } = useAddBoughtBooks();
-  const { mutate: deleteBook } = useDeleteBoughtBook();
+  const { mutate: decreaseBook } = useDecreaseBoughtBook();
   const { mutate: deleteBooks } = useDeleteBoughtBooks();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -119,9 +119,10 @@ export function StoreBookProvider({children} : StoreBookProviderProps){
       setAddToBuy(!bookId)
     }
 
-      deleteBook(deleteFirstBookByTitle) 
+      decreaseBook(deleteFirstBookByTitle) 
   }
 
+  //=================================================
 
   const removeFromCart = (bookId: number, bookTitle: string) => {
     setAddToBuy(!bookId)
@@ -129,6 +130,7 @@ export function StoreBookProvider({children} : StoreBookProviderProps){
      const showBoughtBooks =  datawBoughtBook?.data.filter((book: any) => book.title === bookTitle);
      const idsToDelete = showBoughtBooks.map((book: any) => book.id)
     
+
     for( let i = 0; i<idsToDelete.length; i++){
       deleteBooks(idsToDelete[i])
     }

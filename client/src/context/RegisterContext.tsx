@@ -28,7 +28,8 @@ export function RegisterProvider({children} : RegisterProps){
 
     const { mutate, data, isError, error, status  } = useRegisterUser();  
    
-    console.log(data)
+    console.log(isError)
+    console.log("Register:", isError && error)
 
 
     const [ registerUser, setRegisterUser] = useState("");

@@ -1,7 +1,7 @@
 // import React from 'react'
 import { useBookShop } from "../context/StoreContext"
 import "../styles/StoreBookCart.scss"
-import { useShowBoughtBooks, useDeleteBoughtBook } from '../hooks/useDataBoughtBooks';
+import { useShowBoughtBooks, useDecreaseBoughtBook } from '../hooks/useDataBoughtBooks';
 
 
 
@@ -17,7 +17,7 @@ export function StoreBookCart({isOpen}: ShoppingCartProps) {
 
   const {openCart, getQuantityByBookTitle, totalAmount, quantityObj} = useBookShop()
   
-  const { mutate: deleteBook } = useDeleteBoughtBook()
+  const { mutate: deleteBook } = useDecreaseBoughtBook()
 
 
   const deleteBoughtBook = (bookId: any) => {

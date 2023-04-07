@@ -37,8 +37,6 @@ function BorrowedItem({book}:any) {
         }
 
         
-
-
         const openModal = () => {
             setModalIsOpen(!modalIsOpen)
         }

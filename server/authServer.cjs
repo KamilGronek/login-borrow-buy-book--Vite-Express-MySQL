@@ -1,10 +1,8 @@
 require('dotenv').config()
 const bcrypt = require('bcrypt');
-
 const express = require('express')
 const app = express()
 const jwt = require('jsonwebtoken')
-
 app.use(express.json())
 const cors = require("cors");
 
@@ -14,11 +12,7 @@ app.use(
   })
 )
 
-const low = require('lowdb');
-
-const FileSync = require('lowdb/adapters/FileSync');
-const adapter = new FileSync('./db.json');
-const db = low(adapter);
+const connection = require('./database.cjs')
 
 
 let refreshTokens = [] 
@@ -45,50 +39,47 @@ app.delete('/logout', (req, res) => {
   res.send({ info: "User logged out"}) 
 })
 
+
 app.post('/login', async (req, res) => {
  
   const { loginUser,passwordUser } = req.body;
 
-try { 
-  
   const user = { 
-     loginUser, 
-     passwordUser
+    email:loginUser, 
+    password:passwordUser
   }
 
-  const userRegister = db.get('register')
-
-  console.log("userRegister:::", userRegister);
-
-  const existingUser = await userRegister
-  .find({ email: user.loginUser , password: user.passwordUser}).value();
-  
-  console.log("existingUser 5000:::", existingUser);
+  const sqlCheck = 'SELECT * FROM register WHERE email = ?';
 
 
-  if(existingUser == undefined ) {
-     return  res.status(401).json({warning:'User with this email does not exist'})
-  }
+  connection.query(sqlCheck, [user.email], (err, result) => {
+    if(err){
+      console.log(err);
+      res.status(500).send('Error checking user');
+    }else if(result.length == 0){
+      console.log("result Login:",result)
+        res.status(401).send({warning:'User with this email does not exist'})
+    }else{
+      bcrypt.compare(user.password, result[0].password, (err, isMatch) =>{
+        if (err) {
+          console.log(err);
+          res.status(500).send('Error comparing passwords');
+        } else if (!isMatch) {
+          res.status(401).send({ warning: 'Incorrect password' });
+        }else{ 
+          const accessToken = generateAccessToken(user);
+          const refreshToken = generateRefreshToken(user)
+          refreshTokens.push(refreshToken)
+          res.json({ accessToken: accessToken, refreshToken: refreshToken, info: "User is logged"});
+        } 
+      });
+    }
+  });
+});
 
-  else{
-      const accessToken = generateAccessToken(user);
-      console.log("accessToken 5000:::::", accessToken)
 
-      const refreshToken = generateRefreshToken(user)
-
-      refreshTokens.push(refreshToken)
-      
-      res.json({ accessToken: accessToken, refreshToken: refreshToken, info: "User is logged"})
-  }
-
-  } catch(err) {
-    res.send("User undefined") 
-  }
-
-})
 
 function generateAccessToken(user) {
-
   const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '60m' })
   return token;
 }

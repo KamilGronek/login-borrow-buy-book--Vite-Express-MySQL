@@ -15,6 +15,27 @@ type UserLogin = {
 
 export function Login() {
 
+  // // n = // 1,1,2,3,5,8,13,21
+
+  // // F(n-1) + F(n-2) 
+
+
+
+
+  //  fib(0) = 1
+  //  useFetchLibrary
+
+
+  // const array = ""
+  // for(let i = 0; i<numbers.length; i++){
+  //     array = numbers[i]% 2 == 0
+  // }
+
+
+
+
+
+
   const {loginUser,setLoginUser} = useLogin()
   const [ passwordUser,setPasswordUser ] = useState("");
     
