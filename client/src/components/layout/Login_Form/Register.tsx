@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
-import "../../styles/LoginForm.scss"
-import { useRegister } from "../../context/RegisterContext"
+import "../../../styles/LoginForm.scss"
+import { useRegister } from "../../../context/RegisterContext"
 
 export function Register() {
 
     const {registerUser, passwordUser, setRegisterUser, 
-           setPasswordUser, showInfo, handleCreateUser, data } = useRegister()
+           setPasswordUser, showInfo, handleCreateUser, data,error } = useRegister()
 
 
   return (
@@ -32,9 +32,19 @@ export function Register() {
           />
           <>
           {showInfo ? (
-            <span> {data?.data} </span>
+            <div className="show-info">
+              <span style={{color: "green"}}> {data?.data} </span>
+            </div>
           ):(
             <hr className="span-register"/>
+          )
+          }
+           {showInfo ? (
+            <div className="show-info">
+              <span style={{color: "red"}}> {error?.response.data} </span>
+            </div>
+          ):(
+            ""
           )
           }
           </>

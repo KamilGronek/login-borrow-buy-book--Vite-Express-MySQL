@@ -1,10 +1,18 @@
-import React,{useState} from 'react'
-import { useLibraryRental } from "../../context/LibraryContext";
-import { useBookShop } from "../../context/StoreContext";
-import PictureModal from "../PictureModal";
+import React,{ lazy, Suspense, useState } from 'react'
+import { useBorrowedBooks } from "../../../../context/BorrowedBooksContext";
+import { useBookShop } from "../../../../context/BoughtBooksContext";
+// import { PictureModal } from "./Modal";
+
+const PictureModal = lazy(() => 
+  import("./Modal").then(module => {
+    return {default: module.PictureModal }
+  })
+)
 
 
-function BorrowedItem({book}:any) {
+
+
+export function BorrowedItem({book}:any) {
 
     const { 
             changePrice, 
@@ -15,12 +23,12 @@ function BorrowedItem({book}:any) {
             priceAlertSecond,
             confirmEditBook,
             handleReturnedBook,
-            disabledBtnConfirm
-           } = useLibraryRental()
+            disabledBtnConfirm,
+            returnBookInfo,
+            showInfoBook
+           } = useBorrowedBooks()
     
-    const { 
-            disabledBtnChangePrice
-           } = useBookShop()       
+    const { disabledBtnChangePrice} = useBookShop()       
 
 
 
@@ -28,18 +36,18 @@ function BorrowedItem({book}:any) {
 
         const styleGiveBackDate = {
             color: "red",
-          };
+        };
 
-          const styleBtnConfirm = {
+        const styleBtnConfirm = {
             opacity: 0.6,
             cursor: "not-allowed",
             pointerEvents: "none"
-        }
+        };
 
         
         const openModal = () => {
             setModalIsOpen(!modalIsOpen)
-        }
+        };
 
     return (
      <>
@@ -63,7 +71,7 @@ function BorrowedItem({book}:any) {
                 </span>
                 <br />
                 <p>
-                    <em style={book.important ? styleGiveBackDate : null}>(give back to: {book.date})</em>
+                    <em style={book.important ? styleGiveBackDate : {}}>(give back to: {book.date})</em>
                 </p>
             </i>
             <div className="gallery_btn">
@@ -99,11 +107,20 @@ function BorrowedItem({book}:any) {
                 ""
                 )}
                 <button className="gallery__btn-details" onClick={() => handleReturnedBook(book.id)}>Give back a book</button>
+                {/* {showInfoBook ? ( 
+                 <a>{returnBookInfo?.data}</a>
+                ):(
+                ""
+                )} */}
+               
             </div>
         </div>   
-        <PictureModal {...book} modalIsOpen={modalIsOpen} openModal={openModal}/>    
+        {modalIsOpen && (
+        <Suspense fallback={<div>Loading...</div>}>
+            <PictureModal {...book} modalIsOpen={modalIsOpen} openModal={openModal}/>    
+        </Suspense>
+        )}
      </>
   )
 }
 
-export default BorrowedItem

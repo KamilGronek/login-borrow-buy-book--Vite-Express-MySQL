@@ -1,23 +1,24 @@
 import React from 'react'
-import "../styles/SectionBooks.scss";
-import { useLibraryRental } from "../context/LibraryContext";
-import BorrowedItem from "./Items/BorrowedItem";
-import StoreItem from "./Items/StoreItem";
-import { Header } from "./Header";
-import { MenuBorrowDetails } from "./MenuBorrowDetails";
-import { Navigation } from "./Navigation";
-import { useBorrowOrBuyBook } from "../context/BorrrowOrBuyContext"
+import "../../../styles/SectionBooks.scss";
+import { useBorrowedBooks } from "../../../context/BorrowedBooksContext";
+import { BorrowedItem } from "./Items/BorrowedItem";
+import { BoughtItem } from "./Items/BoughtItem";
+import { Header } from "../Header";
+import { MenuBorrowDetails } from "../MenuBorrowDetails";
+import { Navigation } from "../Navigation";
+import { useShowBorrowedBook } from '../../../hooks/useBorrowedBooks';
+
 
 
 export function BorrowedBooks() {
   
-  // const { data: dataBooks} = useBorrowOrBuyBook()
+  // const { data } = useShowBorrowedBook()
 
 
-    const {data} =  useLibraryRental()
+    const {data} =  useBorrowedBooks()
 
 
-    const sortBorrowedBooks = data?.data.sort((prevId,nextId)=>{
+    const sortBorrowedBooks = data?.data.sort((prevId:any,nextId:any)=>{
         return prevId.id - nextId.id;
     })
 
@@ -27,11 +28,11 @@ export function BorrowedBooks() {
          <MenuBorrowDetails/>
             {data?.data.length > 0 ? (
               <section className="gallery"> 
-                {sortBorrowedBooks.map(book => (
+                {sortBorrowedBooks.map((book:any) => (
                 <div data-testid="borrowedBook-1" key={book.id} className="gallery__book">
                   <span className="gallery__bookId">{book.id}</span>
                   <BorrowedItem book = {book}/>
-                  <StoreItem book = {book}/>
+                  <BoughtItem book = {book}/>
                 </div>
                 ))}
               </section> 
