@@ -82,14 +82,25 @@
 
 
 import axios from "axios";
-import { useContext } from 'react';
+// import { useContext } from "react";
+// import { useContext } from 'react';
 import { BorrowedBooks } from "../components/layout/pages/BorrowedBooks";
-import { AuthContext } from "../context/AuthProvider"
-import useAuth from '../hooks/useAuth';
+// import { AuthContext } from "../context/AuthProvider"
+// import useAuth from '../hooks/useAuth';
 
 const client = axios.create({ baseURL: 'http://localhost:4000' });
 
+let useContext = {};
+let AuthContext = {};
+let useAuth = {};
 
+export const initialize = (useCon: typeof useContext,
+                          AuthCon: typeof AuthContext,
+                          useAu: typeof useAuth) => {
+  useContext = useCon;
+  AuthContext = AuthCon;
+  useAuth = useAu;
+}
 
 export const request = ({ ...options }) => {
   console.log({ ...options });
@@ -113,6 +124,8 @@ export const request = ({ ...options }) => {
       console.log("we are in if");
 
       // const { refreshToken } = options.headers || {}
+
+
       const { refreshToken } = useContext(AuthContext);
 
        console.log("next step we are in if");  
