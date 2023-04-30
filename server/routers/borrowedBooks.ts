@@ -1,31 +1,20 @@
-
-const express = require("express");
-const jwt = require('jsonwebtoken')
+import express, { Request, Response } from 'express';
+import { RowDataPacket } from 'mysql2';
 const createError = require('http-errors')
 const router = express.Router();
 const bodyParser = require("body-parser");
-const multer  = require('multer');
-const upload = multer({ dest: 'uploads/' });
 let jsonParser = bodyParser.json()
+import  authenticateToken from '../authToken';
+import connection from '../database';
 
-const connection = require('../database.cjs')
 
-router.post('/borrowedBooks', authenticateToken, upload.single('image'), jsonParser, (req, res) => {
+router.post('/borrowedBooks',authenticateToken, jsonParser, (req: Request, res: Response) => {
 
   const { id, cover, price, title, author, 
           pages, link, date, important, active,
           activeReturnedBook,finishDate } = req.body;
 
   const {large,small} = cover;
-
-  console.log("COVER:",cover)
-
-  console.log("BOOKS_COVER:", req.body.cover);
-
-  const file = req.file
-  console.log(file);
-
-  console.log(req.body)
 
   const createBorrowedBooks = {
       id,
@@ -63,19 +52,19 @@ router.post('/borrowedBooks', authenticateToken, upload.single('image'), jsonPar
       ]
     ];
 
-    connection.query(sql,[values], function(err, result){
+    connection.query(sql,[values], function(err:any, result){
       if (err) throw err;
         console.log("borrowed results:", result);
-        console.log("records inserted:", result.affectedRows);
+        // console.log("records inserted:", result.affectedRows);
     })
 });
 
 
 
-router.get('/borrowedBooks', authenticateToken, (req, res) => {
+router.get('/borrowedBooks', authenticateToken,  (req: Request, res: Response) => {
     connection.query(
       "SELECT * FROM project_book.borrowedbooks",
-    (err, results) => {
+    (err, results: RowDataPacket[]) => {
       if (err) {
         console.log(err)
       } 
@@ -86,49 +75,13 @@ router.get('/borrowedBooks', authenticateToken, (req, res) => {
           cover: JSON.parse(book.cover)
         };
       });
+      // console.log("borroweDBooks:", updatedResults)
       res.send(updatedResults);
     });
 });
 
 
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers['authorization']
-
-  const token = authHeader && authHeader.split(' ')[1]
-
-  if (token == null) {
-    return res.status(401).json({warning:'No token provided'})
-  }
-  
-    console.log("token getting m: ", token);
-    console.log("token getting secret -", process.env.ACCESS_TOKEN_SECRET);
-
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-
-    console.log("Show error:", err)
-    console.log("Token !!!!:", token)
-      if (err){
-        console.log('Error verifying JWT:', err);
-        res.status(401).json({ warning: 'Invalid token',code: "EXPIRED"}); // expired
-
-        // const message = err.name === 'JsonWebTokenError' ?(
-        //   'Unauthirized' ): (
-        //     err.message)
-        //  return next(createError.Unauthorized(message)) 
-      }
-
-    // if(err.name === "TokenEpiredError"){
-    //   res.status(403).json({ warning: 'Token expired' })
-    // }
-   
-      req.user = user;
-      console.log("dane4000:", user)
-    next()
-  })
-}
-
-
-router.put('/borrowedBooks/:id' , (req,res) => {
+router.put('/borrowedBooks/:id', authenticateToken, (req: Request, res: Response) => {
   const bookId = req.params.id;
 
   const { id, cover, price, title, author, 
@@ -155,7 +108,6 @@ router.put('/borrowedBooks/:id' , (req,res) => {
     finishDate
   }
 
-
   let sql = `UPDATE borrowedbooks SET price = ${price} WHERE id = ${bookId}`;
 
   let values = [ 
@@ -175,24 +127,24 @@ router.put('/borrowedBooks/:id' , (req,res) => {
 
   connection.query(sql,[values], function(err, result){
     if (err) throw err;
-      console.log("records inserted:", result.affectedRows);
+      // console.log("records inserted:", result.affectedRows);
       res.send(result);
   })
 
 });
 
 
-router.delete('/borrowedBooks/:id', (req, res) => {
+router.delete('/borrowedBooks/:id', authenticateToken, (req: Request, res: Response) => {
     const bookId = req.params.id;
   
     let sql = `DELETE FROM borrowedbooks WHERE id = ${bookId}`;
 
     connection.query(sql, function(err, result){
       if (err) throw err;
-        console.log("records deleted:", result.affectedRows);
-        res.send("BorrowedBook deleted successfully");
+        // console.log("records deleted:", result.affectedRows);
+        res.status(200).send("BorrowedBook deleted successfully");
     })
 
 });
 
-module.exports = router;
+export default router;

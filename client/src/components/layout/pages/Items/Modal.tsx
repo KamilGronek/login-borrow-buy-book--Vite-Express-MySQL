@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
-import "../styles/Modal.scss"
-import { useShowBorrowedBook } from "../hooks/useDataLibraryBooks";
+import "../../../../styles/Modal.scss"
+import { useShowBorrowedBook } from "../../../../hooks/useBorrowedBooks";
  
 Modal.setAppElement('#root')
 
@@ -15,7 +15,7 @@ type ModalProps = {
 
 
 
-function PictureModal({id,modalIsOpen,openModal}: ModalProps) {
+export function PictureModal({id,modalIsOpen,openModal}: ModalProps) {
 
      const { data } =   useShowBorrowedBook()
 
@@ -61,4 +61,4 @@ function PictureModal({id,modalIsOpen,openModal}: ModalProps) {
     )
 }
 
-export default PictureModal
+

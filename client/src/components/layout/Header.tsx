@@ -1,29 +1,48 @@
-import React from "react";
-import "../styles/Header.scss"
-import { useBookShop } from "../context/StoreContext"
-import { useLogin } from "../context/LoginContext"
+import React,{useEffect, lazy} from "react";
+import "../../styles/Header.scss"
+import { useBookShop } from "../../context/BoughtBooksContext"
+import { useLogin } from "../../context/LoginContext"
 import { useNavigate  } from 'react-router-dom';
-import { useLogout } from "../hooks/useDataFormUser"
-import useAuth from "../hooks/useAuth"
+import { useLogout } from "../../hooks/useDataFormUser"
+import useAuth from "../../hooks/useAuth"
 
+// const BorrowedBooks = lazy(() => 
+//   import("../layout/pages/BorrowedBooks").then(module => {
+//     return {default: module.BorrowedBooks }
+//   })
+// )
 
 export function Header() {
 
   const navigateTo = useNavigate();
 
-  const { openCart,quantityObj } = useBookShop();
-  const { loginUser} = useLogin()
+  const { openCart, quantityObj } = useBookShop();
+  const { loginUser, setAlertLogout } = useLogin()
   const { auth } = useAuth();
   
 
-  const {mutate: logout} = useLogout();
+  const {mutate, error, data} = useLogout();
+
+  console.log("Errooooor logouttt:",error?.response.data.error);
+  console.log("Data logout:", data?.data.info);
 
 
   const logOut = () => {
     localStorage.removeItem('token');
+    console.log("Wyloguj !!!!")
     navigateTo("/login");
-    logout(auth)
+    mutate(auth);
   }
+
+  // useEffect(() => {
+  //   const timeoutId = setTimeout(() => {
+  //     logOut();
+  //     setAlertLogout(true)
+  //   }, 60000); 
+  
+  //   return () => clearTimeout(timeoutId);
+  // }, [])
+
 
 console.log("quantityObj:",quantityObj)
 
@@ -74,8 +93,6 @@ console.log("quantityObj:",quantityObj)
         </div>
       <hr className="header__hr" />
     </header>
-   
-    
   );
 };
 

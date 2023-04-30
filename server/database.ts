@@ -1,4 +1,4 @@
-const mysql = require('mysql2')
+import mysql from 'mysql2';
 
 
 const connection = mysql.createConnection({
@@ -8,4 +8,4 @@ const connection = mysql.createConnection({
     database: 'project_book'
 });
 
-module.exports = connection;
+export default connection;

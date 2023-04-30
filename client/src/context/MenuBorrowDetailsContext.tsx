@@ -1,12 +1,13 @@
 import { createContext, ReactNode, useContext, useState } from "react";
-import { useFetchLibrary, useDeleteItemSelect, useBorrowBook} from '../hooks/useDataLibraryBooks';
+import { useFetchLibrary, useDeleteItemSelect} from "../hooks/useBooks";
+import { useBorrowBook } from "../hooks/useBorrowedBooks";
 import { DataItem } from "../types/types"
 
-type BorrowOrBuyProviderProps = {
+type MenuBorrowDetailsProviderProps = {
     children: ReactNode
   }
 
-type BorrowOrBuyBookContext = {
+type MenuBorrowBookDetailsContext = {
     handleChooseTitle: (e: any) => void
     handleBorrowBook: (e: any) => void
     checked: boolean
@@ -18,41 +19,29 @@ type BorrowOrBuyBookContext = {
     minDate: string,
     maxDate: number,
     getMaxDate: string,
-    data: DataItem
+    data: DataItem,
+    error: object
+    message: string
 }
 
 
-const BorrowOrBuyContext = createContext({} as BorrowOrBuyBookContext);
+const MenuBorrowDetailsContext = createContext({} as MenuBorrowBookDetailsContext);
 
-export function useBorrowOrBuyBook() {
-    return useContext(BorrowOrBuyContext);
+export function useMenuBorrowDetails() {
+    return useContext(MenuBorrowDetailsContext);
 }
 
-export function BorrowOrBuyProvider({children} : BorrowOrBuyProviderProps){
+export function MenuBorrowDetailsProvider({children} : MenuBorrowDetailsProviderProps){
 
-
-    type MenuDetailsProps = {
-        data: object,
-        error: object
-      }
-    
-    
       const [checked, setChecked] = useState(false);
       const [actualDate, setActualDate] = useState("");
       const [inputValue, setInputValue] = useState("");
       const [disabledBtn, setDisabledBtn] = useState(true);
-
-    const onSuccess = (data: MenuDetailsProps) => { 
-        console.log('Perform side effect after data fetching', data);
-      }
     
-      const onError = (error: MenuDetailsProps) => {
-        console.log('Perform side effect after encountering error', error);
-      }
-    
-      const { isLoading ,data, isError, error, isFetching, refetch } = useFetchLibrary(onSuccess,onError)
-    
+      const { isLoading ,data, isError, error} = useFetchLibrary()
       const { mutate: deleteItem } = useDeleteItemSelect()
+
+      
       const { mutate: addBook } = useBorrowBook(); // Create - 201
       
     
@@ -61,7 +50,7 @@ export function BorrowOrBuyProvider({children} : BorrowOrBuyProviderProps){
      }
     
      if (isError) {
-      return <h2>{error.message}</h2>
+      return <h2>{error?.message}</h2>
      }
 
      let  minDate = new Date().toISOString().slice(0, 10);
@@ -82,17 +71,17 @@ export function BorrowOrBuyProvider({children} : BorrowOrBuyProviderProps){
         }
       }
 
+      //=================================================================================
+
     const addBookTobBorrowedBooks = data?.data.filter((bookTitle: any) => bookTitle.title  === inputValue)
-    const id = addBookTobBorrowedBooks.map((bookId: any) => (bookId.id));
+    const id = addBookTobBorrowedBooks?.map((bookId: any) => (bookId.id));
 
 
     const handleBorrowBook = (e: React.FormEvent<HTMLFormElement>) => {
-        // e.preventDefault()
-        // console.log(  e.preventDefault())
-      
+        e.preventDefault()
+
         addBook(addBookTobBorrowedBooks[0])
         deleteItem(id[0])
-        refetch();
 
           if(!inputValue){
             return
@@ -117,7 +106,7 @@ export function BorrowOrBuyProvider({children} : BorrowOrBuyProviderProps){
     }
 
      return(
-        <BorrowOrBuyContext.Provider
+        <MenuBorrowDetailsContext.Provider
           value={{
             handleChooseTitle,
             handleBorrowBook,
@@ -133,7 +122,7 @@ export function BorrowOrBuyProvider({children} : BorrowOrBuyProviderProps){
             data
           }}>
             {children}
-        </BorrowOrBuyContext.Provider>
+        </MenuBorrowDetailsContext.Provider>
      )
 
 }

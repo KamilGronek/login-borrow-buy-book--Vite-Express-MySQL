@@ -1,26 +1,20 @@
-const express = require("express");
-const jwt = require('jsonwebtoken');
-const { v4: uuidv4 } = require('uuid');
+import express from 'express';
+import { RowDataPacket, OkPacket } from 'mysql2';
+import { Request, Response } from 'express';
 const router = express.Router();
 const bodyParser = require("body-parser");
-const multer  = require('multer');
-const upload = multer({ dest: 'uploads/' });
 let jsonParser = bodyParser.json()
-const connection = require('../database.cjs')
+import  authenticateToken from '../authToken';
+import connection from '../database';
 
-router.post('/boughtBooks', upload.single('image'), jsonParser, (req, res) => {
+router.post('/boughtBooks',authenticateToken, jsonParser, (req: Request, res: Response) => {
 
     const {  cover, price, title, author, 
             pages, link, date, important, active,
             activeReturnedBook,finishDate } = req.body;
 
     const {large,small} = cover;
-    const file = req.file
-    console.log(file);
-
-    console.log(req.body)
-
-
+  
     const createBoughtBooks = {
         cover: {
           large,
@@ -53,18 +47,18 @@ router.post('/boughtBooks', upload.single('image'), jsonParser, (req, res) => {
         createBoughtBooks.finishDate ]
     ];
 
-    connection.query(sql,[values], function(err, result){
+    connection.query(sql,[values], function(err, result:OkPacket | OkPacket[]){
       if (err) throw err;
-        console.log("records inserted:", result.affectedRows);
+        console.log("Records inserted !!!!!:", result);
     })
 
 });
 
 
-router.get('/boughtBooks', (req, res) => {
+router.get('/boughtBooks',authenticateToken, (req: Request, res: Response) => {
     connection.query(
         "SELECT * FROM project_book.boughtbooks",
-      (err, results) => {
+      (err, results: RowDataPacket[]) => {
         if (err) {
           console.log(err)
         } 
@@ -82,7 +76,7 @@ router.get('/boughtBooks', (req, res) => {
 });
 
 
-router.delete('/boughtBooks/:id', (req, res) => {
+router.delete('/boughtBooks/:id',authenticateToken, (req: Request, res: Response) => {
     const bookId = req.params.id;
 
     console.log("boughtBooks ID:", req.params.id)
@@ -93,34 +87,8 @@ router.delete('/boughtBooks/:id', (req, res) => {
       if (err) throw err;
 
         console.log("delete ID:::",result)
-        console.log("records deleted:", result.affectedRows);
         res.send("BoughtBooks deleted successfully");
     })
 });
 
-// function authenticateToken(req, res, next) {
-//     const authHeader = req.headers['authorization']
-//     const token = authHeader && authHeader.split(' ')[1]
-
-//     if (!token) {
-//         return res.status(401).json({warning:'No token provided'})
-//     }
-
-//     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-//         console.log("Show error:", err)
-//         console.log("Token !!!!:", token)
-
-//         if (err){
-//             console.log('Error verifying JWT:', err);
-//             res.status(401).json({ warning: 'Invalid token', code: "EXPIRED"
-//             });
-//         }
-//         req.user = user;
-//         console.log("dane4000 BoughtBooks:", user)
-
-//     next()
-//     })
-// }
-
-
-module.exports = router;
+export default router;

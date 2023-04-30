@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useContext, useState, useEffect } from "react";
 import { useRegisterUser} from "../hooks/useDataFormUser";
+import { DataItem} from "../types/types" ;
 
 
 type RegisterProps = {
@@ -13,7 +14,8 @@ type RegisterUserContext = {
     setPasswordUser: (e: any) => void,
     showInfo: boolean
     handleCreateUser: (e: any) => void
-    data: string
+    data: any,
+    error: object
 }
 
 
@@ -26,11 +28,8 @@ export function useRegister() {
 
 export function RegisterProvider({children} : RegisterProps){
 
-    const { mutate, data, isError, error, status  } = useRegisterUser();  
-   
-    console.log(isError)
-    console.log("Register:", isError && error)
-
+    const { mutate, data, error, status  } = useRegisterUser();  
+    
 
     const [ registerUser, setRegisterUser] = useState("");
     const [ passwordUser,setPasswordUser ] = useState("");
@@ -58,11 +57,13 @@ export function RegisterProvider({children} : RegisterProps){
         <RegisterContext.Provider
           value={{
             registerUser,
+            passwordUser,
             setRegisterUser,
             setPasswordUser,
             showInfo,
             handleCreateUser,
-            data
+            data,
+            error
           }}>
             {children}
         </RegisterContext.Provider>

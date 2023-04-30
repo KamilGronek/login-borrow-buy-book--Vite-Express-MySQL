@@ -5,13 +5,16 @@ import { BookId, PassBook } from "../types/types"
 import { useContext } from 'react';
 import { AuthContext } from "../context/AuthProvider"
 
-const addBoughtBooks = (book: PassBook) => {
-    return request({url:'/boughtBooks', method: 'post', data: book}).result
+const addBoughtBooks = (book: PassBook, auth: string) => {
+    const headers = {  Authorization: `Bearer ${auth}`}
+    return request({url:'/boughtBooks', headers, method: 'post', data: book}).result
 }
 
 export const useAddBoughtBooks = () => {
-    const queryClient = useQueryClient();
-    return useMutation(addBoughtBooks, 
+    const { auth } = useContext(AuthContext);
+    const queryClient = useQueryClient();   
+    return useMutation(
+        (book: PassBook) => addBoughtBooks(book, auth), 
         {
         onSuccess: () => {
             queryClient.invalidateQueries('boughtBooks')
@@ -21,20 +24,14 @@ export const useAddBoughtBooks = () => {
 }
 
 
-const showBoughtBooks = async (auth:any) => { 
-    try {
-        const headers = {  Authorization: `Bearer ${auth}`}
-        const response = await request({url:'/boughtBooks',headers }).result;
-        return response;
-    } catch (err) {
-        console.log(err);
-    }
+const showBoughtBooks = async (auth: string) => { 
+    const headers = {  Authorization: `Bearer ${auth}`}
+    return await request({url:'/boughtBooks',headers }).result;
+  
 }
 
 export const useShowBoughtBooks = () => {
-
     const { auth } = useContext(AuthContext);
-
     return useQuery(
         'boughtBooks',
         () =>showBoughtBooks(auth),
@@ -46,15 +43,17 @@ export const useShowBoughtBooks = () => {
 
 // CART =========================
 
-const decreaseBoughtBook = async (bookId: string) => {
-    console.log("delete ID:::",bookId)
-    const response = await request({url:`/boughtBooks/${bookId}`, method: 'delete' }).result
-    return response;
+const decreaseBoughtBook = (bookId: string, auth: string) => {
+    const headers = {  Authorization: `Bearer ${auth}`}
+    return request({url:`/boughtBooks/${bookId}`, headers, method: 'delete' }).result
+ 
 }
 
 export const useDecreaseBoughtBook = () => {
+    const { auth } = useContext(AuthContext);
     const queryClient = useQueryClient()
-    return useMutation(decreaseBoughtBook,
+    return useMutation(
+        (bookId: string) => decreaseBoughtBook(bookId,auth),
         {
         onSuccess: () => {
             queryClient.invalidateQueries('boughtBooks')
@@ -63,10 +62,10 @@ export const useDecreaseBoughtBook = () => {
 } 
 //=================================================
 
-const deleteBoughtBooks = async (id: string, auth:string) => {
-    // const headers = {  Authorization: `Bearer ${auth}`}
-    const response = await request({url: `/boughtBooks/${id}`, method: 'delete'}).result
-    return response;
+const deleteBoughtBooks = (id: string, auth: string) => {
+    const headers = {  Authorization: `Bearer ${auth}`}
+    return request({url: `/boughtBooks/${id}`,headers, method: 'delete'}).result
+ 
 }
 
 export const useDeleteBoughtBooks = () => {

@@ -1,9 +1,6 @@
 
-import React,{useState,useEffect} from 'react'
-import "../styles/AddBook.scss"
-// import { useFetchLibrary, useDeleteItemSelect, useBorrowBook} from '../hooks/useDataLibraryBooks';
-// import { useLibraryRental } from "../context/LibraryContext";
-import { useBorrowOrBuyBook } from "../context/BorrrowOrBuyContext"
+import "../../styles/AddBook.scss"
+import { useMenuBorrowDetails } from "../../context/MenuBorrowDetailsContext"
 
 export const MenuBorrowDetails =()=> {
 
@@ -20,7 +17,7 @@ export const MenuBorrowDetails =()=> {
     maxDate,
     getMaxDate,
     data
-    } = useBorrowOrBuyBook()
+    } = useMenuBorrowDetails()
 
 
 

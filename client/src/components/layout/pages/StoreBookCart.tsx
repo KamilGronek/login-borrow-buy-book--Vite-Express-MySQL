@@ -1,7 +1,6 @@
-// import React from 'react'
-import { useBookShop } from "../context/StoreContext"
-import "../styles/StoreBookCart.scss"
-import { useShowBoughtBooks, useDecreaseBoughtBook } from '../hooks/useDataBoughtBooks';
+import { useBookShop } from "../../../context/BoughtBooksContext"
+import "../../../styles/StoreBookCart.scss"
+import { useShowBoughtBooks, useDecreaseBoughtBook } from '../../../hooks/useBoughtBooks';
 
 
 
@@ -12,21 +11,11 @@ type ShoppingCartProps = {
 export function StoreBookCart({isOpen}: ShoppingCartProps) {
 
 
-
   const { data, isFetching } = useShowBoughtBooks();
 
-  const {openCart, getQuantityByBookTitle, totalAmount, quantityObj} = useBookShop()
+  const {openCart, getQuantityByBookTitle, totalAmount, quantityObj, deleteBoughtBook} = useBookShop()
+
   
-  const { mutate: deleteBook } = useDecreaseBoughtBook()
-
-
-  const deleteBoughtBook = (bookId: any) => {
-      deleteBook(bookId)
-      if(quantityObj-1 === 0){
-        openCart()
-    }
-  }   
-
 
 
   const uniqueBooks = data?.data.reduce((acc:any , curr: any) => {
@@ -37,7 +26,7 @@ export function StoreBookCart({isOpen}: ShoppingCartProps) {
   }, []);
 
 
-  const style = {
+  const styleStoreBookCart = {
       position: "fixed",
       top: 0,
       bottom: 0,
@@ -92,7 +81,7 @@ export function StoreBookCart({isOpen}: ShoppingCartProps) {
      ):(
       ""
      )}
-       <div style={isOpen ? style : null }></div>
+       <div style={isOpen ? styleStoreBookCart : null }></div>
     </>
     
   )

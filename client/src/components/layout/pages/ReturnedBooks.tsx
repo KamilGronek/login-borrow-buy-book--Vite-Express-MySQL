@@ -1,30 +1,37 @@
 import React  from 'react'
-import "../styles/SectionBooks.scss";
-import { useShowReturnedBooks, useConfirmReturmedBook, useAddItemSelect } from '../hooks/useDataLibraryBooks';
-import { Header } from "./Header";
-import { MenuBorrowDetails } from "./MenuBorrowDetails";
-import { Navigation } from "./Navigation";
+import "../../../styles/SectionBooks.scss";
+import { useShowReturnedBooks, useConfirmReturmedBook,  } from "../../../hooks/useReturnedBooks"
+import { useAddItemSelect  } from "../../../hooks/useBooks";
+import { Header } from "../Header";
+import { MenuBorrowDetails } from "../MenuBorrowDetails";
+import { Navigation } from "../Navigation";
+import { useReturnedBooks } from "../../../context/ReturnedBooksContext"
 
  export function ReturnedBooks() {
  
-    const { isLoading ,data,isError, error, isFetching, refetch} = useShowReturnedBooks();
-    const {mutate: returnBook} = useConfirmReturmedBook();
+    // const {data} = useShowReturnedBooks();
+    // const {mutate: returnBook} = useConfirmReturmedBook();
 
-    const { mutate: addItem } = useAddItemSelect();
+    // const { mutate: addItem } = useAddItemSelecst();
+
+    // const sortReturneddBooks= data?.data.sort((prevId: any,nextId: any)=>{
+    //     return prevId.id - nextId.id;
+    // })
+
+
+    // const handleConfirmReturnedBook = (bookId: any) => {
+    //     returnBook(bookId)
+
+    //     const addItemSelect = data?.data.filter((idBook: any) => idBook.id === bookId)
+    //     addItem(addItemSelect[0])
+        
+    // }
+
+    const { handleConfirmReturnedBook, data} = useReturnedBooks() 
 
     const sortReturneddBooks= data?.data.sort((prevId: any,nextId: any)=>{
         return prevId.id - nextId.id;
     })
-
-
-    const handleConfirmReturnedBook = (bookId: any) => {
-        returnBook(bookId)
-
-        const addItemSelect = data?.data.filter((idBook: any) => idBook.id === bookId)
-        addItem(addItemSelect[0])
-        
-    }
-
 
     return (
         <>

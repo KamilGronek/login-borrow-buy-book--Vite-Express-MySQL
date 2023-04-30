@@ -2,10 +2,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug Node.js (cjs)",
+      "name": "Debug Node.js (js)",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/server/index.cjs"
+      "program": "${workspaceFolder}/server/index.js"
     }
   ]
 }

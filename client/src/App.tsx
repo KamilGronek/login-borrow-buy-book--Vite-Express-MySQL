@@ -1,27 +1,51 @@
+import React, {lazy, Suspense} from "react";
 import "./styles/App.css";
-import { QueryClient } from "react-query";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { BorrowedBooks } from "./components/BorrowedBooks";
-import { ReturnedBooks } from "./components/ReturnedBooks";
-import { Login } from "./components/Login_Form/Login";
-import { Register } from "./components/Login_Form/Register";
-import RequireAuth from './components/RequireAuth';
-import { NoMatch }  from "./components/NoMatch";
+import { Login } from "./components/layout/Login_Form/Login";
+import RequireAuth from "./components/RequireAuth";
+import { NoMatchPage }  from "./components/layout/pages/NoMatchPage";
 
-const queryClient = new QueryClient();
+const BorrowedBooks = lazy(() => 
+  import("./components/layout/pages/BorrowedBooks").then(module => {
+    return {default: module.BorrowedBooks }
+  })
+)
+
+const ReturnedBooks = lazy(() => 
+  import("./components/layout/pages/ReturnedBooks").then(module => {
+    return {default: module.ReturnedBooks }
+  })
+)
+
+const Register = lazy(() => 
+  import("./components/layout/Login_Form/Register").then(module => {
+    return {default: module.Register }
+  })
+)
 
 function App() {
-
   return ( 
     <div className="App">
           <Routes>
              <Route path="/login" element={<Login/>} />
-             <Route path="/register" element={<Register/>} />
+             <Route path="/register" element={
+                  <Suspense fallback={<div>Loading...</div>}>
+                      <Register/>
+                  </Suspense>
+              }/>
              <Route element = {<RequireAuth/>}>
-                <Route path="/borrowedBooks" element={<BorrowedBooks/>} />
-                <Route path="/returnedBooks" element={<ReturnedBooks/>} /> 
+                <Route path="/borrowedBooks" element={
+                  <Suspense fallback={<div>Loading...</div>}>
+                      <BorrowedBooks/>
+                  </Suspense>
+                 }/>
+                <Route path="/returnedBooks" element={
+                  <Suspense fallback={<div>Loading...</div>}>
+                      <ReturnedBooks/>
+                  </Suspense>
+                } /> 
             </Route>   
-            <Route path="*" element={<NoMatch/>} />
+            <Route path="*" element={<NoMatchPage/>} />
          </Routes>
     </div>
   );

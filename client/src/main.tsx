@@ -7,9 +7,10 @@ import './index.css'
 
 import { QueryClientProvider ,QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools"
-import { LibraryRentalProvider } from "./context/LibraryContext";
-import { StoreBookProvider } from "./context/StoreContext";
-import { BorrowOrBuyProvider } from "./context/BorrrowOrBuyContext";
+import { BorrowedBooksProvider } from "./context/BorrowedBooksContext";
+import { ReturnedBooksProvider } from "./context/ReturnedBooksContext";
+import { BoughtBooksProvider } from "./context/BoughtBooksContext";
+import { MenuBorrowDetailsProvider } from "./context/MenuBorrowDetailsContext";
 
 import { RegisterProvider } from "./context/RegisterContext";
 import { LoginProvider } from "./context/LoginContext";
@@ -24,20 +25,22 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <ErrorBoundary>
     <QueryClientProvider client={queryClient} >
     <AuthProvider>
-    <StoreBookProvider>
-    <BorrowOrBuyProvider>
+    <BoughtBooksProvider>
+    <MenuBorrowDetailsProvider>
     <RegisterProvider>
-    <LibraryRentalProvider>
+    <BorrowedBooksProvider>
+    <ReturnedBooksProvider>
+    <Router>
     <LoginProvider>
-      <Router>
         <App/>
-      </Router>
     </LoginProvider>
-    </LibraryRentalProvider>
+    </Router>
+    </ReturnedBooksProvider>
+    </BorrowedBooksProvider>
     </RegisterProvider>
-    </BorrowOrBuyProvider>
+    </MenuBorrowDetailsProvider>
     <ReactQueryDevtools initialIsOpen ={false} position='bottom-right'/>
-    </StoreBookProvider>
+    </BoughtBooksProvider>
     </AuthProvider>
     </QueryClientProvider>
     </ErrorBoundary>

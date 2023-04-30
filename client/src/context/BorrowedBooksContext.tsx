@@ -1,19 +1,10 @@
-// import React from 'react';
 import { createContext, ReactNode, useContext, useState } from "react";
-import { useShowBorrowedBook, 
-  useReturnedBook,
-  useReturnTheBorrowedBook, 
-  useShowReturnedBooks,
-  useUpdateBorrowBook
-} from '../hooks/useDataLibraryBooks';
+import { useShowBorrowedBook, useReturnTheBorrowedBook, useUpdateBorrowBook } from '../hooks/useBorrowedBooks';
+import { useReturnedBook, useShowReturnedBooks } from '../hooks/useReturnedBooks';
 import { DataItem } from "../types/types";
-import { AuthContext } from "../context/AuthProvider"
-import { useQuery, useMutation, useQueryClient } from "react-query"
-import { request } from '../utils/axios-utils'
 
 
-
-type LibraryProviderProps = {
+type BorrowedBooksProviderProps = {
   children: ReactNode
 }
 
@@ -37,19 +28,21 @@ type LibraryContext = {
   isFetching: boolean,
   disabledBtnConfirm: boolean,
   countBorrowedBooks: number,
-  countReturnedBooks: number
+  countReturnedBooks: number,
+  returnBookInfo: any,
+  showInfoBook: boolean
 }
 
 
 
-const LibraryRentalContext = createContext({} as LibraryContext);
+const BorrowedBooksContext = createContext({} as LibraryContext);
 
-export function useLibraryRental() {
-    return useContext(LibraryRentalContext);
+export function useBorrowedBooks() {
+    return useContext(BorrowedBooksContext);
 }
 
-export function LibraryRentalProvider({children} : LibraryProviderProps){
-
+export function BorrowedBooksProvider({children} : BorrowedBooksProviderProps){
+    const [ showInfoBook, setShowInfoBook ] = useState(false)
     const [changePrice, setChangePrice] = useState(0);
     const [priceValue, setPriceValue] = useState("");
     const [priceAlert, setPriceAlert] = useState(0);
@@ -75,54 +68,17 @@ export function LibraryRentalProvider({children} : LibraryProviderProps){
       }
     );
 
-    // const getHeaders =  () => {
-    //   const myValue = useAuth();
-    //   console.log(myValue)
-    //   return (
-    //       console.log(myValue)
-    //       // {myValue}
-    //   )
-    // };
   
-
-
-    // const showBorrowedBook = async (auth:any) => { 
-    //   try{
-    //     const headers = {  Authorization: `Bearer ${auth}`}
-    //     let response =  await request({url:'/borrowedBooks', headers})
-    //     return response;
-    //   }catch (error) {
-    //     console.log(error);
-    //   }
-    // }
-
-
-
-    // const { auth } = useContext(AuthContext);
-
-    // console.log(auth)
-
-    // const { isLoading ,data, isError, error, isFetching, refetch } = useQuery(
-    //   'borrowedBooks', 
-    //   () => showBorrowedBook(auth), 
-    //   {
-    //     enabled: !!auth,
-    //   }
-    // )
-    
     const { isLoading ,data, isError, error, isFetching, refetch } = useShowBorrowedBook()
 
     console.log(data)
-   
-    // if(error){
-    //   console.log(error.response.data.code)
-    // }
 
-
-    const { mutate: returnBook } = useReturnTheBorrowedBook();  // delete
+    const { mutate: returnBook, data: returnBookInfo } = useReturnTheBorrowedBook();  // delete
     const { mutate: addReturnedBook } = useReturnedBook(); // Create - 201
     const { data: returnedBooks } = useShowReturnedBooks();
     const { mutate : updateBook } = useUpdateBorrowBook()
+
+    console.log("Delete Book:", returnBookInfo?.data)
 
     
     const resetPriceAlert = () => {
@@ -215,6 +171,8 @@ const confirmEditBook = (e: any, bookId: any) => {
 
 const handleReturnedBook = (bookId :any) => { //delete
 
+  setShowInfoBook(true)
+
   console.log("start ", "handleReturnedBook")
   returnBook(bookId);
   const addBookTobReturnedBooks = data?.data.filter((idBook:any)  => idBook.id === bookId)
@@ -227,7 +185,7 @@ const handleReturnedBook = (bookId :any) => { //delete
 // let countReturnedBooks = returnedBooks?.data.length
 
      return(
-        <LibraryRentalContext.Provider
+        <BorrowedBooksContext.Provider
           value={{
               changePrice,
               editItemsBook,
@@ -243,11 +201,13 @@ const handleReturnedBook = (bookId :any) => { //delete
               returnedBooks,
               isLoading,
               disabledBtnConfirm,
+              returnBookInfo,
+              showInfoBook,
               // countBorrowedBooks,
               // countReturnedBooks
           }}>
             {children}
-        </LibraryRentalContext.Provider>
+        </BorrowedBooksContext.Provider>
      )
 
 }
