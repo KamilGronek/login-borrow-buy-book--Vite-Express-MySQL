@@ -1,4 +1,4 @@
-The more actual branch when you read it ```components``` 
+The most actual branch while you read it ---> ```optimization``` 
 
 
 # Introduction
@@ -17,15 +17,18 @@ The main assumption of the project was to show how I deal with writing applicati
 
 ## Construction:
 
-To make the application desktop more readable, the application files has been divided into folders: 
+To make the application desktop more readable, the application files has been divided into folders:
 For client side: 
 
-```components``` 
+```components``` - app contains with several divided children component 
+  - layout - contains that files composed of visual elements 
+  - pages - pages with result of visualation server's responds for requests  
+  - items - contains rest of code from pages/ children of page
 ```context``` - here are all contexts with logic side app like functions and states included in Providers's functions nested with main.ts file.  
-```hooks``` 
-```styles```
-```types``` 
-```utils``` 
+```hooks```  - contains all the request to the server with REST API 
+```styles``` - css modifed to sass 
+```types```  - all typical types characteristic for typeScript
+```utils``` - contain interceptors with base URL and updated headers with accessToken to pass it to the files's hooks
 
 
 ## Run applications by Vite:
