@@ -13,7 +13,7 @@
 
 ## Run applications by Vite:
 
-After downloading file, first pass to the correct path and install ```bash node.modules``` environment, in terminal write: 
+After downloading file, first pass to the correct path and install ```node.modules``` environment, in terminal write: 
 
 for client: 
 ```bash
