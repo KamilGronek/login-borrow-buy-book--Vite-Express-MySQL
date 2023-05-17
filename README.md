@@ -1,14 +1,31 @@
+The more actual branch when you read it ```components``` 
+
+
 # Introduction
 
+The project that was created is a simple application that allows you to order / buy books in the demo version.
+When I was writing the application, I was more interested to show technological content, the division of business logic, than actual appearance and extensive functionality.
+
+The main assumption of the project was to show how I deal with writing applications from the front and backend side, additionally connecting it to the database.
 
 ## Technologies
 
-- React.js
-- Node.js
+- React.js - React Router/ Context API / React Query
+- Node.js - 
 - Sass 
 - MySQLWorkbench
 
 ## Construction:
+
+To make the application desktop more readable, the application files has been divided into folders: 
+For client side: 
+
+```components``` 
+```context``` - here are all contexts with logic side app like functions and states included in Providers's functions nested with main.ts file.  
+```hooks``` 
+```styles```
+```types``` 
+```utils``` 
 
 
 ## Run applications by Vite:
